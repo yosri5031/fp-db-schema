@@ -186,8 +186,8 @@
                 <tr><td>name</td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Name of the package.</td></tr>
                 <tr><td>description</td><td>TEXT</td><td>NOT NULL</td><td>Description of the package.</td></tr>
                 <tr><td>base_price</td><td>DECIMAL(10, 2)</td><td>NOT NULL</td><td>Base price for the package.</td></tr>
-                <tr><td>items</td><td>JSON</td><td>NULLABLE</td><td>Items included in the package (e.g., albums).</td></tr>
-                <tr><td>services</td><td>JSON</td><td>NULLABLE</td><td>Services included in the package.</td></tr>
+                <tr><td>items (include icons) </td><td>JSON</td><td>NULLABLE</td><td>Items included in the package (e.g., prints).</td></tr>
+                <tr><td>services</td><td>JSON</td><td>NULLABLE</td><td>Services included in the package. (e.g. Event Photography)</td></tr>
                 <tr><td>valid_from</td><td>DATE</td><td>NOT NULL</td><td>Start date for the package.</td></tr>
                 <tr><td>valid_until</td><td>DATE</td><td>NOT NULL</td><td>End date for the package.</td></tr>
                 <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the package was created.</td></tr>
