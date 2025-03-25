@@ -84,7 +84,8 @@
         table tr:hover {
             background-color: #ddd;
         }
-    </style>
+    </style> 
+    
     <h1>Database Schema Detailed Tables</h1>
 
     <div class="table-container">
@@ -180,17 +181,97 @@
                 </tr>
             </thead>
             <tbody>
-                <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the package.</td></tr>
-                <tr><td>service_id</td><td>INT</td><td>FOREIGN KEY</td><td>The service to which the package belongs.</td></tr>
-                <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>The studio offering the package.</td></tr>
-                <tr><td>name</td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Name of the package.</td></tr>
-                <tr><td>description</td><td>TEXT</td><td>NOT NULL</td><td>Description of the package.</td></tr>
+                <tr><td>items</td><td>JSON</td><td>NULLABLE</td><td>Items included in the package (e.g., prints).</td></tr>
+                <tr>
+<tr><td>services</td><td>JSON</td><td>NULLABLE</td><td>Services included in the package (e.g., Event Photography).</td></tr>
                 <tr><td>base_price</td><td>DECIMAL(10, 2)</td><td>NOT NULL</td><td>Base price for the package.</td></tr>
-                <tr><td>items (include icons) </td><td>JSON</td><td>NULLABLE</td><td>Items included in the package (e.g., prints).</td></tr>
-                <tr><td>services</td><td>JSON</td><td>NULLABLE</td><td>Services included in the package. (e.g. Event Photography)</td></tr>
                 <tr><td>valid_from</td><td>DATE</td><td>NOT NULL</td><td>Start date for the package.</td></tr>
                 <tr><td>valid_until</td><td>DATE</td><td>NOT NULL</td><td>End date for the package.</td></tr>
                 <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the package was created.</td></tr>
+                <tr><td>updated_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the package was last updated.</td></tr>
+            </tbody>
+        </table>
+
+        <h2>Availability Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Constraints</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the availability slot.</td></tr>
+                <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the studio the availability belongs to.</td></tr>
+                <tr><td>date</td><td>DATE</td><td>NOT NULL</td><td>Available date.</td></tr>
+                <tr><td>start_time</td><td>TIME</td><td>NOT NULL</td><td>Starting time of the availability slot.</td></tr>
+                <tr><td>end_time</td><td>TIME</td><td>NOT NULL</td><td>Ending time of the availability slot.</td></tr>
+                <tr><td>is_booked</td><td>BOOLEAN</td><td>DEFAULT FALSE</td><td>Indicates if the slot is booked.</td></tr>
+                <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the availability was created.</td></tr>
+            </tbody>
+        </table>
+
+        <h2>Booking Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Constraints</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for a booking.</td></tr>
+                <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the studio being booked.</td></tr>
+                <tr><td>service_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the service being booked.</td></tr>
+                <tr><td>customer_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the customer making the booking.</td></tr>
+                <tr><td>date</td><td>DATE</td><td>NOT NULL</td><td>Date of the booking.</td></tr>
+                <tr><td>time</td><td>TIME</td><td>NOT NULL</td><td>Time of the booking.</td></tr>
+                <tr><td>status</td><td>ENUM('pending', 'confirmed', 'cancelled')</td><td>NOT NULL</td><td>Status of the booking.</td></tr>
+                <tr><td>total_price</td><td>DECIMAL(10, 2)</td><td>NOT NULL</td><td>Total price for the booking.</td></tr>
+                <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the booking was made.</td></tr>
+            </tbody>
+        </table>
+
+        <h2>Customer Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Constraints</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the customer.</td></tr>
+                <tr><td>first_name</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>First name of the customer.</td></tr>
+                <tr><td>last_name</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>Last name of the customer.</td></tr>
+                <tr><td>email</td><td>VARCHAR(255)</td><td>NOT NULL, UNIQUE</td><td>Email address of the customer.</td></tr>
+                <tr><td>phone</td><td>VARCHAR(20)</td><td>NULLABLE</td><td>Contact phone number of the customer.</td></tr>
+                <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the customer account was created.</td></tr>
+            </tbody>
+        </table>
+
+        <h2>Break Days Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Constraints</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the break day.</td></tr>
+                <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the studio setting the break day.</td></tr>
+                <tr><td>date</td><td>DATE</td><td>NOT NULL</td><td>Break day date.</td></tr>
+                <tr><td>reason</td><td>TEXT</td><td>NULLABLE</td><td>Reason for the break day.</td></tr>
+                <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the break day was set.</td></tr>
             </tbody>
         </table>
     </div>
