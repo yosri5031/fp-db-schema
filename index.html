@@ -15,7 +15,7 @@
             background-color: #f5f5f5;
             color: #333;
         }
-        h1 {
+        h1, h2 {
             text-align: center;
             color: #555;
         }
@@ -30,6 +30,7 @@
             color: white;
             border-radius: 5px;
             font-size: 16px;
+            margin: 0 10px;
         }
         .button-container a:hover {
             background-color: #45a049;
@@ -40,20 +41,6 @@
             padding: 20px;
             background-color: #fff;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-    </style>
-</head>
-<body>
-      <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f5f5f5;
-            color: #333;
-        }
-        h1, h2 {
-            text-align: center;
-            color: #555;
         }
         .table-container {
             max-width: 1200px;
@@ -84,212 +71,24 @@
         table tr:hover {
             background-color: #ddd;
         }
-    </style> 
-    
-    <h1>Database Schema Detailed Tables</h1>
-
-    <div class="table-container">
-        <h2>Studio Table</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Field</th>
-                    <th>Type</th>
-                    <th>Constraints</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the studio.</td></tr>
-                <tr><td>name</td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Name of the studio.</td></tr>
-                <tr><td>address</td><td>TEXT</td><td>NOT NULL</td><td>Address of the studio.</td></tr>
-                <tr><td>city</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>City where the studio is located.</td></tr>
-                <tr><td>country</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>Country where the studio is located.</td></tr>
-                <tr><td>owner_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the studio owner.</td></tr>
-                <tr><td>phone</td><td>VARCHAR(20)</td><td>NULLABLE</td><td>Contact phone number of the studio.</td></tr>
-                <tr><td>email</td><td>VARCHAR(255)</td><td>NULLABLE, UNIQUE</td><td>Contact email of the studio.</td></tr>
-                <tr><td>logo</td><td>TEXT</td><td>NULLABLE</td><td>URL of the studio's logo.</td></tr>
-                <tr><td>images</td><td>TEXT[]</td><td>NULLABLE</td><td>List of URLs for studio images (gallery).</td></tr>
-                <tr><td>website</td><td>VARCHAR(255)</td><td>NULLABLE</td><td>Website link of the studio.</td></tr>
-                <tr><td>social_links</td><td>JSON</td><td>NULLABLE</td><td>Social media links (e.g., Instagram, Facebook).</td></tr>
-                <tr><td>description</td><td>TEXT</td><td>NULLABLE</td><td>Description of the studio.</td></tr>
-                <tr><td>latitude</td><td>DECIMAL(10, 8)</td><td>NOT NULL</td><td>Latitude for geolocation.</td></tr>
-                <tr><td>longitude</td><td>DECIMAL(11, 8)</td><td>NOT NULL</td><td>Longitude for geolocation.</td></tr>
-                <tr><td>is_active</td><td>BOOLEAN</td><td>DEFAULT TRUE</td><td>Indicates if the studio is active.</td></tr>
-                <tr><td>is_verified</td><td>BOOLEAN</td><td>DEFAULT FALSE</td><td>Indicates if the studio is verified.</td></tr>
-                <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the studio was created.</td></tr>
-                <tr><td>updated_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the studio was last updated.</td></tr>
-            </tbody>
-        </table>
-
-        <h2>Studio Owner Table</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Field</th>
-                    <th>Type</th>
-                    <th>Constraints</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the studio owner.</td></tr>
-                <tr><td>first_name</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>First name of the owner.</td></tr>
-                <tr><td>last_name</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>Last name of the owner.</td></tr>
-                <tr><td>email</td><td>VARCHAR(255)</td><td>NOT NULL, UNIQUE</td><td>Email address of the owner.</td></tr>
-                <tr><td>password</td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Encrypted password of the owner.</td></tr>
-                <tr><td>phone</td><td>VARCHAR(20)</td><td>NULLABLE</td><td>Contact phone number of the owner.</td></tr>
-                <tr><td>profile_image</td><td>TEXT</td><td>NULLABLE</td><td>URL to the owner's profile picture.</td></tr>
-                <tr><td>social_links</td><td>JSON</td><td>NULLABLE</td><td>Social links for the owner (e.g., Instagram).</td></tr>
-                <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the owner account was created.</td></tr>
-                <tr><td>updated_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the owner account was last updated.</td></tr>
-            </tbody>
-        </table>
-
-        <h2>Service Table</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Field</th>
-                    <th>Type</th>
-                    <th>Constraints</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the service.</td></tr>
-                <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>The studio offering the service.</td></tr>
-                <tr><td>name</td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Name of the service.</td></tr>
-                <tr><td>description</td><td>TEXT</td><td>NULLABLE</td><td>Description of the service.</td></tr>
-                <tr><td>category</td><td>ENUM('photo', 'video', 'event')</td><td>NOT NULL</td><td>Category of the service.</td></tr>
-                <tr><td>pricing_type</td><td>ENUM('fixed', 'package')</td><td>NOT NULL</td><td>Indicates if the service has fixed or package pricing.</td></tr>
-                <tr><td>fixed_price</td><td>DECIMAL(10, 2)</td><td>NULLABLE</td><td>Flat price for the service (if fixed pricing).</td></tr>
-                <tr><td>is_active</td><td>BOOLEAN</td><td>DEFAULT TRUE</td><td>Indicates if the service is active.</td></tr>
-                <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the service was created.</td></tr>
-                <tr><td>updated_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the service was last updated.</td></tr>
-            </tbody>
-        </table>
-
-        <h2>Package Table</h2>
-      <table>
-    <thead>
-        <tr>
-            <th>Field</th>
-            <th>Type</th>
-            <th>Constraints</th>
-            <th>Description</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the package.</td></tr>
-        <tr><td>service_id</td><td>INT</td><td>FOREIGN KEY</td><td>The service to which the package belongs.</td></tr>
-        <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>The studio offering the package.</td></tr>
-        <tr><td>name</td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Name of the package.</td></tr>
-        <tr><td>description</td><td>TEXT</td><td>NOT NULL</td><td>Description of the package.</td></tr>
-        <tr><td>base_price</td><td>DECIMAL(10, 2)</td><td>NOT NULL</td><td>Base price for the package.</td></tr>
-        <tr><td>items</td><td>JSON</td><td>NULLABLE</td><td>Items included in the package (e.g., prints).</td></tr>
-        <tr><td>services</td><td>JSON</td><td>NULLABLE</td><td>Services included in the package (e.g., Event Photography).</td></tr>
-        <tr><td>valid_from</td><td>DATE</td><td>NOT NULL</td><td>Start date for the package.</td></tr>
-        <tr><td>valid_until</td><td>DATE</td><td>NOT NULL</td><td>End date for the package.</td></tr>
-        <tr><td>is_active</td><td>BOOLEAN</td><td>DEFAULT TRUE</td><td>Indicates if the package is active.</td></tr>
-        <tr><td>package_type</td><td>ENUM('Green', 'Popular', 'Best Value')</td><td>DEFAULT 'Green'</td><td>Type or category of the package for promotional purposes.</td></tr>
-        <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the package was created.</td></tr>
-        <tr><td>updated_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the package was last updated.</td></tr>
-    </tbody>
-</table>
-
-        <h2>Availability Table</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Field</th>
-                    <th>Type</th>
-                    <th>Constraints</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the availability slot.</td></tr>
-                <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the studio the availability belongs to.</td></tr>
-                <tr><td>date</td><td>DATE</td><td>NOT NULL</td><td>Available date.</td></tr>
-                <tr><td>start_time</td><td>TIME</td><td>NOT NULL</td><td>Starting time of the availability slot.</td></tr>
-                <tr><td>end_time</td><td>TIME</td><td>NOT NULL</td><td>Ending time of the availability slot.</td></tr>
-                <tr><td>is_booked</td><td>BOOLEAN</td><td>DEFAULT FALSE</td><td>Indicates if the slot is booked.</td></tr>
-                <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the availability was created.</td></tr>
-            </tbody>
-        </table>
-
-        <h2>Booking Table</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Field</th>
-                    <th>Type</th>
-                    <th>Constraints</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for a booking.</td></tr>
-                <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the studio being booked.</td></tr>
-                <tr><td>service_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the service being booked.</td></tr>
-                <tr><td>customer_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the customer making the booking.</td></tr>
-                <tr><td>date</td><td>DATE</td><td>NOT NULL</td><td>Date of the booking.</td></tr>
-                <tr><td>time</td><td>TIME</td><td>NOT NULL</td><td>Time of the booking.</td></tr>
-                <tr><td>status</td><td>ENUM('pending', 'confirmed', 'cancelled')</td><td>NOT NULL</td><td>Status of the booking.</td></tr>
-                <tr><td>total_price</td><td>DECIMAL(10, 2)</td><td>NOT NULL</td><td>Total price for the booking.</td></tr>
-                <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the booking was made.</td></tr>
-            </tbody>
-        </table>
-
-        <h2>Customer Table</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Field</th>
-                    <th>Type</th>
-                    <th>Constraints</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the customer.</td></tr>
-                <tr><td>first_name</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>First name of the customer.</td></tr>
-                <tr><td>last_name</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>Last name of the customer.</td></tr>
-                <tr><td>email</td><td>VARCHAR(255)</td><td>NOT NULL, UNIQUE</td><td>Email address of the customer.</td></tr>
-                <tr><td>phone</td><td>VARCHAR(20)</td><td>NULLABLE</td><td>Contact phone number of the customer.</td></tr>
-                <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the customer account was created.</td></tr>
-            </tbody>
-        </table>
-
-        <h2>Break Days Table</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Field</th>
-                    <th>Type</th>
-                    <th>Constraints</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the break day.</td></tr>
-                <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the studio setting the break day.</td></tr>
-                <tr><td>date</td><td>DATE</td><td>NOT NULL</td><td>Break day date.</td></tr>
-                <tr><td>reason</td><td>TEXT</td><td>NULLABLE</td><td>Reason for the break day.</td></tr>
-                <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the break day was set.</td></tr>
-            </tbody>
-        </table>
-    </div>
+        .highlight {
+            background-color: #f0fff0;
+            border-left: 4px solid #4CAF50;
+            padding-left: 10px;
+        }
+    </style>
+</head>
+<body>
     <h1>Database Schema Overview</h1>
     <div class="button-container">
-        <a href="https://mermaid.live/view#pako:eNrFVk1zmzAQ_SsanZtLj74pNk2pvzKGpM3UHY2MFqwxII8knHiS_PcK_AVYbpgkM-XG7kO7-_btomccSQ64h0ENBEsUy-Y5sk8Q3g38KXrevZWPPwmR4Oh2eDLdk1n_O5mhnGVwsoberxAxzhVofY6NhNk6rLLIjdo2o8nHHBS1Mb85Yq6XModzM2RMpK1cUpnIpun3HyQyloAjv0dYaGFqJ_8IphOkZSRYSlORr3TrdA46UmJthMzPT1sUWuSWB6ogEdoo5oYZ9mTrPNkHXt8fkxFKLd4UHBwemSct1_V0OvLIBAlNWWTExu3agBKxgFqw0B97QUjGtyhSwAxwyozLW6x5w_s6z-taodOfE2_WUTGxUNrQpm4OvpRddLW6e9QC0_pRKv6mSqqGrZWMRQq0UkC3Pn-YIW927_e9N8gpTdr2VMhLoncMmlN-3uRujCKbSyLrQ1WZ10pEIk-o2a4duorFky2gxHRT1oepuSX9IbnpRA2ojU2rzc3nsXbgYME0tCmo1GH3QqbbitllVTMPSOihDUsFp7GSmdNht11dyP8geNczFq2sWFs9-zD35J74I3Ltj_zw4d3arKoqAzRDWzRThhqRtR2Q85a5Vv5CylW35XSswn499Cc3wbsreENcUaGNzM7_RJcKb9ZW9c9yYQp9rjQjjd02Lal1KLl_F4TT8f_atq2d2qFDM48M6YA8BJ-qsnKQbUhdn-EO2eyvNi8vV1fy-biae2iOZRyD0nPswjVmpQQv2QXkUY8lSkEEdp4vQU_ElGANxgl8af5iq1Tt3YjTxfYAPyrClUTGVrUM9gW7gLvpo7FUF9CHbX0kAH_BdjSsULi9Q1bNnWOzBCsnXGI4xKxITXnaq4Wywshgm0e4Z1QBX_BuM-0vngejkkWyxL2Ypdq-Jao8eu-xqwNUv7wr4t7X179Sjwky" target="_blank">
+        <a href="https://mermaid.live/view#pako:eNrFV0tzmzAQ_isM5-TSo2_Epin1cwxOm2k6GhkE1hgQIwk7nsT_vSvjB2ARE9edcmHYXfbx6duV9Gb6LCBmxyS8R3HEcfKSGvC43qznjI234ks9zsgzaGBM-ifRkzXtfrOmRooTcpJ69k_PwEHAiRDntj6VG42U5ankm2o0tk4JRxDzqyZmtmApOReTBNO4lkvMIlYV_fpt0ARHRJPfmswFlSXP393xyBDMpzhGMU2XouY9IMLnNJOUpefe5rmgKeCAOImokBzrzSR-hTpP8p7ddYbWwIjBXuYB0WhYGtVUD-PxwLZGBhUI-5Ku9KoV4TSkRBMMryKkEkyj6jJIJqH0QlMu3hnarmcNJ4bPCZYkQFjqtHkWVLTb4lWmGRr_GNnTlmQLKRcSVSl30MW4UVUjxpFGWIg148FFgu3WOuMspDFBO_K0o8hNULKnT07XvgCQEgmgBGVNPaPpUy177dFsaPiQT8TKPbkTZ5z6QAQkN5mGliF9hSKUTTti3gSeidXtW4-t4CF8BanV8bkdcgcc5liQOgw7lsBoSUSdOUVWJXHP8mxjhWMaoJCzRKuAgVkm9AcgF-uG_SWQtrZuN8HferKcgfXgDBzv-WqO7ipTQarhwRpziSRN6gqSBjVxCYI5Y8vyjGuus1IJeOg7o0f36ioukMzPhWTJ-abWVHy1vt06Ah4yF-eMK6Z0c-dxVfWnAenOXG88_F-zuTaBW67h1Lb6qGc9uzflomp5CCvK3d4yo6nlAan-ilOKz2rqfoJTF-cd5uKsvhUl69p0KjZ-qExyOs9leUx9eKwoKbN8HlP_xlOnQBVZnjd1Hmaeff1ZVTvJr9q0dAlObXcyHrlttqc91K13p_2iiYylgvyTk5nx_n5_z96OJ5CO8WKyMCRAHVNnV9kKlPECN1geR62y4sQnAHGT6amjlbEgUmv4Xj1N7lKFG0SA5hu9331f6hI4zj1dtgleNluWnEaVkvYI6hwWuxUKGW-wPpxwaogenWhiE7g7YXmKv9dVLE_cLMraoAUGolf_2LLyH6d2U7_Q1I_hDgJBzDsTZhDM8QDukjumv5hyQaDXTGUYkBDnsVSut2CKc8ncTeqbHclzcmcWTNxfQA9CzvJoYXZCHAv4irhyvdfA3k94V90Zzc6X7R-aESgx" target="_blank">
             View Diagram in Mermaid Live Editor
         </a>
-        <a href="https://mermaid.live/edit#pako:eNrFVk1zmzAQ_SsanZtLj74pNk2pvzKGpM3UHY2MFqwxII8knHiS_PcK_AVYbpgkM-XG7kO7-_btomccSQ64h0ENBEsUy-Y5sk8Q3g38KXrevZWPPwmR4Oh2eDLdk1n_O5mhnGVwsoberxAxzhVofY6NhNk6rLLIjdo2o8nHHBS1Mb85Yq6XModzM2RMpK1cUpnIpun3HyQyloAjv0dYaGFqJ_8IphOkZSRYSlORr3TrdA46UmJthMzPT1sUWuSWB6ogEdoo5oYZ9mTrPNkHXt8fkxFKLd4UHBwemSct1_V0OvLIBAlNWWTExu3agBKxgFqw0B97QUjGtyhSwAxwyozLW6x5w_s6z-taodOfE2_WUTGxUNrQpm4OvpRddLW6e9QC0_pRKv6mSqqGrZWMRQq0UkC3Pn-YIW927_e9N8gpTdr2VMhLoncMmlN-3uRujCKbSyLrQ1WZ10pEIk-o2a4duorFky2gxHRT1oepuSX9IbnpRA2ojU2rzc3nsXbgYME0tCmo1GH3QqbbitllVTMPSOihDUsFp7GSmdNht11dyP8geNczFq2sWFs9-zD35J74I3Ltj_zw4d3arKoqAzRDWzRThhqRtR2Q85a5Vv5CylW35XSswn499Cc3wbsreENcUaGNzM7_RJcKb9ZW9c9yYQp9rjQjjd02Lal1KLl_F4TT8f_atq2d2qFDM48M6YA8BJ-qsnKQbUhdn-EO2eyvNi8vV1fy-biae2iOZRyD0nPswjVmpQQv2QXkUY8lSkEEdp4vQU_ElGANxgl8af5iq1Tt3YjTxfYAPyrClUTGVrUM9gW7gLvpo7FUF9CHbX0kAH_BdjSsULi9Q1bNnWOzBCsnXGI4xKxITXnaq4Wywshgm0e4Z1QBX_BuM-0vngejkkWyxL2Ypdq-Jao8eu-xqwNUv7wr4t7X179Sjwky">
+        <a href="https://mermaid.live/edit#pako:eNrFV0tzmzAQ_isM5-TSo2_Epin1cwxOm2k6GhkE1hgQIwk7nsT_vSvjB2ARE9edcmHYXfbx6duV9Gb6LCBmxyS8R3HEcfKSGvC43qznjI234ks9zsgzaGBM-ifRkzXtfrOmRooTcpJ69k_PwEHAiRDntj6VG42U5ankm2o0tk4JRxDzqyZmtmApOReTBNO4lkvMIlYV_fpt0ARHRJPfmswFlSXP393xyBDMpzhGMU2XouY9IMLnNJOUpefe5rmgKeCAOImokBzrzSR-hTpP8p7ddYbWwIjBXuYB0WhYGtVUD-PxwLZGBhUI-5Ku9KoV4TSkRBMMryKkEkyj6jJIJqH0QlMu3hnarmcNJ4bPCZYkQFjqtHkWVLTb4lWmGRr_GNnTlmQLKRcSVSl30MW4UVUjxpFGWIg148FFgu3WOuMspDFBO_K0o8hNULKnT07XvgCQEgmgBGVNPaPpUy177dFsaPiQT8TKPbkTZ5z6QAQkN5mGliF9hSKUTTti3gSeidXtW4-t4CF8BanV8bkdcgcc5liQOgw7lsBoSUSdOUVWJXHP8mxjhWMaoJCzRKuAgVkm9AcgF-uG_SWQtrZuN8HferKcgfXgDBzv-WqO7ipTQarhwRpziSRN6gqSBjVxCYI5Y8vyjGuus1IJeOg7o0f36ioukMzPhWTJ-abWVHy1vt06Ah4yF-eMK6Z0c-dxVfWnAenOXG88_F-zuTaBW67h1Lb6qGc9uzflomp5CCvK3d4yo6nlAan-ilOKz2rqfoJTF-cd5uKsvhUl69p0KjZ-qExyOs9leUx9eKwoKbN8HlP_xlOnQBVZnjd1Hmaeff1ZVTvJr9q0dAlObXcyHrlttqc91K13p_2iiYylgvyTk5nx_n5_z96OJ5CO8WKyMCRAHVNnV9kKlPECN1geR62y4sQnAHGT6amjlbEgUmv4Xj1N7lKFG0SA5hu9331f6hI4zj1dtgleNluWnEaVkvYI6hwWuxUKGW-wPpxwaogenWhiE7g7YXmKv9dVLE_cLMraoAUGolf_2LLyH6d2U7_Q1I_hDgJBzDsTZhDM8QDukjumv5hyQaDXTGUYkBDnsVSut2CKc8ncTeqbHclzcmcWTNxfQA9CzvJoYXZCHAv4irhyvdfA3k94V90Zzc6X7R-aESgx" target="_blank">
             Edit Diagrams
         </a>
     </div>
+    
     <div class="mermaid-container">
         <div class="mermaid">
             erDiagram
@@ -313,6 +112,8 @@
                     DECIMAL longitude
                     BOOLEAN is_active
                     BOOLEAN is_verified
+                    DECIMAL avg_rating
+                    INT total_ratings
                     TIMESTAMP created_at
                     TIMESTAMP updated_at
                 }
@@ -379,6 +180,7 @@
                     TIME time
                     ENUM status
                     DECIMAL total_price
+                    BOOLEAN is_rated
                     TIMESTAMP created_at
                 }
 
@@ -399,15 +201,469 @@
                     TIMESTAMP created_at
                 }
 
+                RATING {
+                    INT id PK
+                    INT studio_id FK
+                    INT booking_id FK
+                    INT customer_id FK
+                    INT service_id FK
+                    INT stars
+                    TEXT review
+                    JSON rating_attributes
+                    BOOLEAN is_verified
+                    BOOLEAN is_public
+                    TIMESTAMP created_at
+                    TIMESTAMP updated_at
+                }
+
+                RATING_ATTRIBUTE {
+                    INT id PK
+                    VARCHAR name
+                    TEXT description
+                    BOOLEAN is_active
+                    TIMESTAMP created_at
+                }
+
+                RATING_RESPONSE {
+                    INT id PK
+                    INT rating_id FK
+                    INT studio_id FK
+                    TEXT response
+                    TIMESTAMP created_at
+                    TIMESTAMP updated_at
+                }
+
                 STUDIO ||--o{ SERVICE : "offers"
                 STUDIO ||--o{ AVAILABILITY : "has"
                 STUDIO ||--o{ BOOKINGS : "receives"
                 STUDIO ||--o{ BREAK_DAYS : "sets"
                 STUDIO ||--o| STUDIO_OWNER : "owned_by"
+                STUDIO ||--o{ RATING : "receives"
                 CUSTOMER ||--o{ BOOKINGS : "makes"
+                CUSTOMER ||--o{ RATING : "gives"
                 SERVICE ||--o{ BOOKINGS : "booked_for"
                 SERVICE ||--o{ PACKAGE : "has"
+                BOOKINGS ||--o{ RATING : "generates"
+                RATING ||--o{ RATING_RESPONSE : "may_have"
+                RATING }o--o{ RATING_ATTRIBUTE : "includes"
         </div>
     </div>
+    <h1>Database Schema Detailed Tables</h1>
+
+<div class="table-container">
+    <h2>Studio Table</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Field</th>
+                <th>Type</th>
+                <th>Constraints</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the break day.</td></tr>
+            <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the studio setting the break day.</td></tr>
+            <tr><td>date</td><td>DATE</td><td>NOT NULL</td><td>Break day date.</td></tr>
+            <tr><td>reason</td><td>TEXT</td><td>NULLABLE</td><td>Reason for the break day.</td></tr>
+            <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the break day was set.</td></tr>
+        </tbody>
+    </table>
+    
+    <!-- New tables for rating system -->
+    <h2 class="highlight">Rating Table</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Field</th>
+                <th>Type</th>
+                <th>Constraints</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the rating.</td></tr>
+            <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the studio being rated.</td></tr>
+            <tr><td>booking_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the booking that generated this rating.</td></tr>
+            <tr><td>customer_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the customer providing the rating.</td></tr>
+            <tr><td>service_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the service that was rated.</td></tr>
+            <tr><td>stars</td><td>INT</td><td>NOT NULL</td><td>Overall star rating (typically 1-5).</td></tr>
+            <tr><td>review</td><td>TEXT</td><td>NULLABLE</td><td>Text review provided by the customer.</td></tr>
+            <tr><td>rating_attributes</td><td>JSON</td><td>NULLABLE</td><td>Structured ratings for specific aspects (e.g., cleanliness, communication).</td></tr>
+            <tr><td>is_verified</td><td>BOOLEAN</td><td>DEFAULT FALSE</td><td>Flag indicating if the rating has been verified.</td></tr>
+            <tr><td>is_public</td><td>BOOLEAN</td><td>DEFAULT TRUE</td><td>Flag indicating if the rating should be publicly visible.</td></tr>
+            <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the rating was created.</td></tr>
+            <tr><td>updated_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the rating was last updated.</td></tr>
+        </tbody>
+    </table>
+
+    <h2 class="highlight">Rating Attribute Table</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Field</th>
+                <th>Type</th>
+                <th>Constraints</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the rating attribute.</td></tr>
+            <tr><td>name</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>Name of the rating attribute (e.g., "Cleanliness", "Communication").</td></tr>
+            <tr><td>description</td><td>TEXT</td><td>NULLABLE</td><td>Description of what this attribute measures.</td></tr>
+            <tr><td>is_active</td><td>BOOLEAN</td><td>DEFAULT TRUE</td><td>Flag indicating if this attribute is currently active in ratings.</td></tr>
+            <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the attribute was created.</td></tr>
+        </tbody>
+    </table>
+
+    <h2 class="highlight">Rating Response Table</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Field</th>
+                <th>Type</th>
+                <th>Constraints</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the rating response.</td></tr>
+            <tr><td>rating_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the rating being responded to.</td></tr>
+            <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the studio providing the response.</td></tr>
+            <tr><td>response</td><td>TEXT</td><td>NOT NULL</td><td>Text of the studio's response to the rating.</td></tr>
+            <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the response was created.</td></tr>
+            <tr><td>updated_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the response was last updated.</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="table-container">
+    <h2 class="highlight">Rating System Explanation</h2>
+    
+    <p>The rating system has been implemented to collect, store, and display customer feedback on studios and their services. This system is designed to enhance trust, provide valuable feedback to studios, and help customers make informed decisions.</p>
+    
+    <h3>Key Components:</h3>
+    
+    <ol>
+        <li><strong>Studio Rating Metrics:</strong> The STUDIO table has been enhanced with <code>avg_rating</code> and <code>total_ratings</code> fields to quickly display aggregate rating information.</li>
+        <li><strong>Booking-Rating Connection:</strong> A new <code>is_rated</code> flag in the BOOKINGS table tracks which bookings have received ratings, ensuring that each booking can receive only one rating.</li>
+        <li><strong>Structured Rating System:</strong> The RATING table stores individual ratings with both overall star ratings and optional detailed text reviews.</li>
+        <li><strong>Rating Attributes:</strong> The RATING_ATTRIBUTE table allows for customizable rating categories (e.g., cleanliness, communication, value) that can be enabled or disabled as needed.</li>
+        <li><strong>Studio Responses:</strong> The RATING_RESPONSE table enables studio owners to respond to customer ratings, fostering engagement and allowing studios to address feedback.</li>
+    </ol>
+    
+    <h3>Rating Flow:</h3>
+    
+    <ol>
+        <li>Customer completes a booking with a studio</li>
+        <li>After service completion, customer is prompted to provide a rating</li>
+        <li>Customer submits a rating with stars, optional review text, and attribute-specific ratings</li>
+        <li>The <code>is_rated</code> flag on the booking is set to TRUE</li>
+        <li>The studio's aggregate ratings (<code>avg_rating</code> and <code>total_ratings</code>) are automatically updated</li>
+        <li>Studio owner can view the rating and provide a response if desired</li>
+        <li>Ratings and responses are displayed to other customers, helping them make informed decisions</li>
+    </ol>
+    
+    <h3>Key Features:</h3>
+    
+    <ul>
+        <li><strong>Verification System:</strong> The <code>is_verified</code> flag ensures that only legitimate ratings are displayed, reducing fraudulent reviews.</li>
+        <li><strong>Public/Private Toggle:</strong> The <code>is_public</code> flag allows for moderation of inappropriate content while still collecting feedback.</li>
+        <li><strong>Structured Attributes:</strong> The JSON <code>rating_attributes</code> field allows for detailed, multi-dimensional feedback beyond just star ratings.</li>
+        <li><strong>Service-Specific Ratings:</strong> By linking ratings to specific services, studios can understand which offerings are most appreciated by customers.</li>
+    </ul>
+    
+    <p>This comprehensive rating system provides both quantitative metrics and qualitative feedback, helping studios improve their services while building trust with potential customers.</p>
+</div></th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the studio.</td></tr>
+            <tr><td>name</td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Name of the studio.</td></tr>
+            <tr><td>address</td><td>TEXT</td><td>NOT NULL</td><td>Address of the studio.</td></tr>
+            <tr><td>city</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>City where the studio is located.</td></tr>
+            <tr><td>country</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>Country where the studio is located.</td></tr>
+            <tr><td>owner_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the studio owner.</td></tr>
+            <tr><td>phone</td><td>VARCHAR(20)</td><td>NULLABLE</td><td>Contact phone number of the studio.</td></tr>
+            <tr><td>email</td><td>VARCHAR(255)</td><td>NULLABLE, UNIQUE</td><td>Contact email of the studio.</td></tr>
+            <tr><td>logo</td><td>TEXT</td><td>NULLABLE</td><td>URL of the studio's logo.</td></tr>
+            <tr><td>images</td><td>TEXT[]</td><td>NULLABLE</td><td>List of URLs for studio images (gallery).</td></tr>
+            <tr><td>website</td><td>VARCHAR(255)</td><td>NULLABLE</td><td>Website link of the studio.</td></tr>
+            <tr><td>social_links</td><td>JSON</td><td>NULLABLE</td><td>Social media links (e.g., Instagram, Facebook).</td></tr>
+            <tr><td>description</td><td>TEXT</td><td>NULLABLE</td><td>Description of the studio.</td></tr>
+            <tr><td>latitude</td><td>DECIMAL(10, 8)</td><td>NOT NULL</td><td>Latitude for geolocation.</td></tr>
+            <tr><td>longitude</td><td>DECIMAL(11, 8)</td><td>NOT NULL</td><td>Longitude for geolocation.</td></tr>
+            <tr><td>is_active</td><td>BOOLEAN</td><td>DEFAULT TRUE</td><td>Indicates if the studio is active.</td></tr>
+            <tr><td>is_verified</td><td>BOOLEAN</td><td>DEFAULT FALSE</td><td>Indicates if the studio is verified.</td></tr>
+            <tr class="highlight"><td>avg_rating</td><td>DECIMAL(3, 2)</td><td>DEFAULT NULL</td><td>Average rating of the studio based on customer reviews.</td></tr>
+            <tr class="highlight"><td>total_ratings</td><td>INT</td><td>DEFAULT 0</td><td>Total number of ratings received by the studio.</td></tr>
+            <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the studio was created.</td></tr>
+            <tr><td>updated_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the studio was last updated.</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Studio Owner Table</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Field</th>
+                <th>Type</th>
+                <th>Constraints</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the studio owner.</td></tr>
+            <tr><td>first_name</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>First name of the owner.</td></tr>
+            <tr><td>last_name</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>Last name of the owner.</td></tr>
+            <tr><td>email</td><td>VARCHAR(255)</td><td>NOT NULL, UNIQUE</td><td>Email address of the owner.</td></tr>
+            <tr><td>password</td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Encrypted password of the owner.</td></tr>
+            <tr><td>phone</td><td>VARCHAR(20)</td><td>NULLABLE</td><td>Contact phone number of the owner.</td></tr>
+            <tr><td>profile_image</td><td>TEXT</td><td>NULLABLE</td><td>URL to the owner's profile picture.</td></tr>
+            <tr><td>social_links</td><td>JSON</td><td>NULLABLE</td><td>Social links for the owner (e.g., Instagram).</td></tr>
+            <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the owner account was created.</td></tr>
+            <tr><td>updated_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the owner account was last updated.</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Service Table</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Field</th>
+                <th>Type</th>
+                <th>Constraints</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the service.</td></tr>
+            <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>The studio offering the service.</td></tr>
+            <tr><td>name</td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Name of the service.</td></tr>
+            <tr><td>description</td><td>TEXT</td><td>NULLABLE</td><td>Description of the service.</td></tr>
+            <tr><td>category</td><td>ENUM('photo', 'video', 'event')</td><td>NOT NULL</td><td>Category of the service.</td></tr>
+            <tr><td>pricing_type</td><td>ENUM('fixed', 'package')</td><td>NOT NULL</td><td>Indicates if the service has fixed or package pricing.</td></tr>
+            <tr><td>fixed_price</td><td>DECIMAL(10, 2)</td><td>NULLABLE</td><td>Flat price for the service (if fixed pricing).</td></tr>
+            <tr><td>is_active</td><td>BOOLEAN</td><td>DEFAULT TRUE</td><td>Indicates if the service is active.</td></tr>
+            <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the service was created.</td></tr>
+            <tr><td>updated_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the service was last updated.</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Package Table</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Field</th>
+                <th>Type</th>
+                <th>Constraints</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the package.</td></tr>
+            <tr><td>service_id</td><td>INT</td><td>FOREIGN KEY</td><td>The service to which the package belongs.</td></tr>
+            <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>The studio offering the package.</td></tr>
+            <tr><td>name</td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Name of the package.</td></tr>
+            <tr><td>description</td><td>TEXT</td><td>NOT NULL</td><td>Description of the package.</td></tr>
+            <tr><td>base_price</td><td>DECIMAL(10, 2)</td><td>NOT NULL</td><td>Base price for the package.</td></tr>
+            <tr><td>items</td><td>JSON</td><td>NULLABLE</td><td>Items included in the package (e.g., prints).</td></tr>
+            <tr><td>services</td><td>JSON</td><td>NULLABLE</td><td>Services included in the package (e.g., Event Photography).</td></tr>
+            <tr><td>valid_from</td><td>DATE</td><td>NOT NULL</td><td>Start date for the package.</td></tr>
+            <tr><td>valid_until</td><td>DATE</td><td>NOT NULL</td><td>End date for the package.</td></tr>
+            <tr><td>is_active</td><td>BOOLEAN</td><td>DEFAULT TRUE</td><td>Indicates if the package is active.</td></tr>
+            <tr><td>package_type</td><td>ENUM('Green', 'Popular', 'Best Value')</td><td>DEFAULT 'Green'</td><td>Type or category of the package for promotional purposes.</td></tr>
+            <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the package was created.</td></tr>
+            <tr><td>updated_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the package was last updated.</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Availability Table</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Field</th>
+                <th>Type</th>
+                <th>Constraints</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the availability slot.</td></tr>
+            <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the studio the availability belongs to.</td></tr>
+            <tr><td>date</td><td>DATE</td><td>NOT NULL</td><td>Available date.</td></tr>
+            <tr><td>start_time</td><td>TIME</td><td>NOT NULL</td><td>Starting time of the availability slot.</td></tr>
+            <tr><td>end_time</td><td>TIME</td><td>NOT NULL</td><td>Ending time of the availability slot.</td></tr>
+            <tr><td>is_booked</td><td>BOOLEAN</td><td>DEFAULT FALSE</td><td>Indicates if the slot is booked.</td></tr>
+            <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the availability was created.</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Booking Table</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Field</th>
+                <th>Type</th>
+                <th>Constraints</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for a booking.</td></tr>
+            <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the studio being booked.</td></tr>
+            <tr><td>service_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the service being booked.</td></tr>
+            <tr><td>customer_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the customer making the booking.</td></tr>
+            <tr><td>date</td><td>DATE</td><td>NOT NULL</td><td>Date of the booking.</td></tr>
+            <tr><td>time</td><td>TIME</td><td>NOT NULL</td><td>Time of the booking.</td></tr>
+            <tr><td>status</td><td>ENUM('pending', 'confirmed', 'cancelled')</td><td>NOT NULL</td><td>Status of the booking.</td></tr>
+            <tr><td>total_price</td><td>DECIMAL(10, 2)</td><td>NOT NULL</td><td>Total price for the booking.</td></tr>
+            <tr class="highlight"><td>is_rated</td><td>BOOLEAN</td><td>DEFAULT FALSE</td><td>Indicates if the customer has provided a rating for this booking.</td></tr>
+            <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the booking was made.</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Customer Table</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Field</th>
+                <th>Type</th>
+                <th>Constraints</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the customer.</td></tr>
+            <tr><td>first_name</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>First name of the customer.</td></tr>
+            <tr><td>last_name</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>Last name of the customer.</td></tr>
+            <tr><td>email</td><td>VARCHAR(255)</td><td>NOT NULL, UNIQUE</td><td>Email address of the customer.</td></tr>
+            <tr><td>phone</td><td>VARCHAR(20)</td><td>NULLABLE</td><td>Contact phone number of the customer.</td></tr>
+            <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the customer account was created.</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Break Days Table</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Field</th>
+                <th>Type</th>
+                <th>Constraints</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the break day.</td></tr>
+            <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the studio setting the break day.</td></tr>
+            <tr><td>date</td><td>DATE</td><td>NOT NULL</td><td>Break day date.</td></tr>
+            <tr><td>reason</td><td>TEXT</td><td>NULLABLE</td><td>Reason for the break day.</td></tr>
+            <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the break day was set.</td></tr>
+        </tbody>
+    </table>
+    
+    <!-- New tables for rating system -->
+    <h2 class="highlight">Rating Table</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Field</th>
+                <th>Type</th>
+                <th>Constraints</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the rating.</td></tr>
+            <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the studio being rated.</td></tr>
+            <tr><td>booking_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the booking that generated this rating.</td></tr>
+            <tr><td>customer_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the customer providing the rating.</td></tr>
+            <tr><td>service_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the service that was rated.</td></tr>
+            <tr><td>stars</td><td>INT</td><td>NOT NULL</td><td>Overall star rating (typically 1-5).</td></tr>
+            <tr><td>review</td><td>TEXT</td><td>NULLABLE</td><td>Text review provided by the customer.</td></tr>
+            <tr><td>rating_attributes</td><td>JSON</td><td>NULLABLE</td><td>Structured ratings for specific aspects (e.g., cleanliness, communication).</td></tr>
+            <tr><td>is_verified</td><td>BOOLEAN</td><td>DEFAULT FALSE</td><td>Flag indicating if the rating has been verified.</td></tr>
+            <tr><td>is_public</td><td>BOOLEAN</td><td>DEFAULT TRUE</td><td>Flag indicating if the rating should be publicly visible.</td></tr>
+            <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the rating was created.</td></tr>
+            <tr><td>updated_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the rating was last updated.</td></tr>
+        </tbody>
+    </table>
+
+    <h2 class="highlight">Rating Attribute Table</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Field</th>
+                <th>Type</th>
+                <th>Constraints</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the rating attribute.</td></tr>
+            <tr><td>name</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>Name of the rating attribute (e.g., "Cleanliness", "Communication").</td></tr>
+            <tr><td>description</td><td>TEXT</td><td>NULLABLE</td><td>Description of what this attribute measures.</td></tr>
+            <tr><td>is_active</td><td>BOOLEAN</td><td>DEFAULT TRUE</td><td>Flag indicating if this attribute is currently active in ratings.</td></tr>
+            <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the attribute was created.</td></tr>
+        </tbody>
+    </table>
+
+    <h2 class="highlight">Rating Response Table</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Field</th>
+                <th>Type</th>
+                <th>Constraints</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the rating response.</td></tr>
+            <tr><td>rating_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the rating being responded to.</td></tr>
+            <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the studio providing the response.</td></tr>
+            <tr><td>response</td><td>TEXT</td><td>NOT NULL</td><td>Text of the studio's response to the rating.</td></tr>
+            <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the response was created.</td></tr>
+            <tr><td>updated_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the response was last updated.</td></tr>
+        </tbody>
+    </table>
+
+<h2 class="highlight">Rating System Explanation</h2>
+
+<p>The rating system has been implemented to collect, store, and display customer feedback on studios and their services. This system is designed to enhance trust, provide valuable feedback to studios, and help customers make informed decisions.</p>
+
+<h3>Key Components:</h3>
+
+<ol>
+    <li><strong>Studio Rating Metrics:</strong> The STUDIO table has been enhanced with <code>avg_rating</code> and <code>total_ratings</code> fields to quickly display aggregate rating information.</li>
+    <li><strong>Booking-Rating Connection:</strong> A new <code>is_rated</code> flag in the BOOKINGS table tracks which bookings have received ratings, ensuring that each booking can receive only one rating.</li>
+    <li><strong>Structured Rating System:</strong> The RATING table stores individual ratings with both overall star ratings and optional detailed text reviews.</li>
+    <li><strong>Rating Attributes:</strong> The RATING_ATTRIBUTE table allows for customizable rating categories (e.g., cleanliness, communication, value) that can be enabled or disabled as needed.</li>
+    <li><strong>Studio Responses:</strong> The RATING_RESPONSE table enables studio owners to respond to customer ratings, fostering engagement and allowing studios to address feedback.</li>
+</ol>
+
+<h3>Rating Flow:</h3>
+
+<ol>
+    <li>Customer completes a booking with a studio</li>
+    <li>After service completion, customer is prompted to provide a rating</li>
+    <li>Customer submits a rating with stars, optional review text, and attribute-specific ratings</li>
+    <li>The <code>is_rated</code> flag on the booking is set to TRUE</li>
+    <li>The studio's aggregate ratings (<code>avg_rating</code> and <code>total_ratings</code>) are automatically updated</li>
+    <li>Studio owner can view the rating and provide a response if desired</li>
+    <li>Ratings and responses are displayed to other customers, helping them make informed decisions</li>
+</ol>
+
+<h3>Key Features:</h3>
+
+<ul>
+    <li><strong>Verification System:</strong> The <code>is_verified</code> flag ensures that only legitimate ratings are displayed, reducing fraudulent reviews.</li>
+    <li><strong>Public/Private Toggle:</strong> The <code>is_public</code> flag allows for moderation of inappropriate content while still collecting feedback.</li>
+    <li><strong>Structured Attributes:</strong> The JSON <code>rating_attributes</code> field allows for detailed, multi-dimensional feedback beyond just star ratings.</li>
+    <li><strong>Service-Specific Ratings:</strong> By linking ratings to specific services, studios can understand which offerings are most appreciated by customers.</li>
+</ul>
+
+<p>This comprehensive rating system provides both quantitative metrics and qualitative feedback, helping studios improve their services while building trust with potential customers.</p>
 </body>
 </html>
