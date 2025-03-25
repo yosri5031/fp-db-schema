@@ -171,26 +171,32 @@
         </table>
 
         <h2>Package Table</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Field</th>
-                    <th>Type</th>
-                    <th>Constraints</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td>items</td><td>JSON</td><td>NULLABLE</td><td>Items included in the package (e.g., prints).</td></tr>
-                <tr>
-<tr><td>services</td><td>JSON</td><td>NULLABLE</td><td>Services included in the package (e.g., Event Photography).</td></tr>
-                <tr><td>base_price</td><td>DECIMAL(10, 2)</td><td>NOT NULL</td><td>Base price for the package.</td></tr>
-                <tr><td>valid_from</td><td>DATE</td><td>NOT NULL</td><td>Start date for the package.</td></tr>
-                <tr><td>valid_until</td><td>DATE</td><td>NOT NULL</td><td>End date for the package.</td></tr>
-                <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the package was created.</td></tr>
-                <tr><td>updated_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the package was last updated.</td></tr>
-            </tbody>
-        </table>
+      <table>
+    <thead>
+        <tr>
+            <th>Field</th>
+            <th>Type</th>
+            <th>Constraints</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the package.</td></tr>
+        <tr><td>service_id</td><td>INT</td><td>FOREIGN KEY</td><td>The service to which the package belongs.</td></tr>
+        <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>The studio offering the package.</td></tr>
+        <tr><td>name</td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Name of the package.</td></tr>
+        <tr><td>description</td><td>TEXT</td><td>NOT NULL</td><td>Description of the package.</td></tr>
+        <tr><td>base_price</td><td>DECIMAL(10, 2)</td><td>NOT NULL</td><td>Base price for the package.</td></tr>
+        <tr><td>items</td><td>JSON</td><td>NULLABLE</td><td>Items included in the package (e.g., prints).</td></tr>
+        <tr><td>services</td><td>JSON</td><td>NULLABLE</td><td>Services included in the package (e.g., Event Photography).</td></tr>
+        <tr><td>valid_from</td><td>DATE</td><td>NOT NULL</td><td>Start date for the package.</td></tr>
+        <tr><td>valid_until</td><td>DATE</td><td>NOT NULL</td><td>End date for the package.</td></tr>
+        <tr><td>is_active</td><td>BOOLEAN</td><td>DEFAULT TRUE</td><td>Indicates if the package is active.</td></tr>
+        <tr><td>package_type</td><td>ENUM('Green', 'Popular', 'Best Value')</td><td>DEFAULT 'Green'</td><td>Type or category of the package for promotional purposes.</td></tr>
+        <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the package was created.</td></tr>
+        <tr><td>updated_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the package was last updated.</td></tr>
+    </tbody>
+</table>
 
         <h2>Availability Table</h2>
         <table>
