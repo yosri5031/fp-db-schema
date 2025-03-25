@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Schema Overview</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #555;
+        }
+        .button-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .button-container a {
+            text-decoration: none;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .button-container a:hover {
+            background-color: #45a049;
+        }
+        .mermaid-container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>Database Schema Overview</h1>
+    <div class="button-container">
+        <a href="https://mermaid.live/view#pako:eNrFVk1zmzAQ_SsanZtLj74pNk2pvzKGpM3UHY2MFqwxII8knHiS_PcK_AVYbpgkM-XG7kO7-_btomccSQ64h0ENBEsUy-Y5sk8Q3g38KXrevZWPPwmR4Oh2eDLdk1n_O5mhnGVwsoberxAxzhVofY6NhNk6rLLIjdo2o8nHHBS1Mb85Yq6XModzM2RMpK1cUpnIpun3HyQyloAjv0dYaGFqJ_8IphOkZSRYSlORr3TrdA46UmJthMzPT1sUWuSWB6ogEdoo5oYZ9mTrPNkHXt8fkxFKLd4UHBwemSct1_V0OvLIBAlNWWTExu3agBKxgFqw0B97QUjGtyhSwAxwyozLW6x5w_s6z-taodOfE2_WUTGxUNrQpm4OvpRddLW6e9QC0_pRKv6mSqqGrZWMRQq0UkC3Pn-YIW927_e9N8gpTdr2VMhLoncMmlN-3uRujCKbSyLrQ1WZ10pEIk-o2a4duorFky2gxHRT1oepuSX9IbnpRA2ojU2rzc3nsXbgYME0tCmo1GH3QqbbitllVTMPSOihDUsFp7GSmdNht11dyP8geNczFq2sWFs9-zD35J74I3Ltj_zw4d3arKoqAzRDWzRThhqRtR2Q85a5Vv5CylW35XSswn499Cc3wbsreENcUaGNzM7_RJcKb9ZW9c9yYQp9rjQjjd02Lal1KLl_F4TT8f_atq2d2qFDM48M6YA8BJ-qsnKQbUhdn-EO2eyvNi8vV1fy-biae2iOZRyD0nPswjVmpQQv2QXkUY8lSkEEdp4vQU_ElGANxgl8af5iq1Tt3YjTxfYAPyrClUTGVrUM9gW7gLvpo7FUF9CHbX0kAH_BdjSsULi9Q1bNnWOzBCsnXGI4xKxITXnaq4Wywshgm0e4Z1QBX_BuM-0vngejkkWyxL2Ypdq-Jao8eu-xqwNUv7wr4t7X179Sjwky" target="_blank">
+            View Diagram in Mermaid Live Editor
+        </a>
+    </div>
+    <div class="mermaid-container">
+        <div class="mermaid">
+            erDiagram
+                STUDIO {
+                    INT id PK
+                    VARCHAR name
+                    TEXT address
+                    VARCHAR city
+                    VARCHAR country
+                    INT owner_id FK
+                    VARCHAR phone
+                    VARCHAR email
+                    TEXT logo
+                    TEXT[] images
+                    VARCHAR website
+                    JSON social_links
+                    TEXT description
+                    VARCHAR business_registration
+                    VARCHAR tax_id
+                    DECIMAL latitude
+                    DECIMAL longitude
+                    BOOLEAN is_active
+                    BOOLEAN is_verified
+                    TIMESTAMP created_at
+                    TIMESTAMP updated_at
+                }
+
+                STUDIO_OWNER {
+                    INT id PK
+                    VARCHAR first_name
+                    VARCHAR last_name
+                    VARCHAR email
+                    VARCHAR password
+                    VARCHAR phone
+                    TEXT profile_image
+                    JSON social_links
+                    TIMESTAMP created_at
+                    TIMESTAMP updated_at
+                }
+
+                SERVICE {
+                    INT id PK
+                    INT studio_id FK
+                    VARCHAR name
+                    TEXT description
+                    ENUM category
+                    ENUM pricing_type
+                    DECIMAL fixed_price
+                    BOOLEAN is_active
+                    TIMESTAMP created_at
+                    TIMESTAMP updated_at
+                }
+
+                PACKAGE {
+                    INT id PK
+                    INT service_id FK
+                    INT studio_id FK
+                    VARCHAR name
+                    TEXT description
+                    DECIMAL base_price
+                    JSON items
+                    JSON services
+                    DATE valid_from
+                    DATE valid_until
+                    BOOLEAN is_active
+                    ENUM package_type
+                    TIMESTAMP created_at
+                    TIMESTAMP updated_at
+                }
+
+                AVAILABILITY {
+                    INT id PK
+                    INT studio_id FK
+                    DATE date
+                    TIME start_time
+                    TIME end_time
+                    BOOLEAN is_booked
+                    TIMESTAMP created_at
+                }
+
+                BOOKINGS {
+                    INT id PK
+                    INT studio_id FK
+                    INT service_id FK
+                    INT customer_id FK
+                    DATE date
+                    TIME time
+                    ENUM status
+                    DECIMAL total_price
+                    TIMESTAMP created_at
+                }
+
+                CUSTOMER {
+                    INT id PK
+                    VARCHAR first_name
+                    VARCHAR last_name
+                    VARCHAR email
+                    VARCHAR phone
+                    TIMESTAMP created_at
+                }
+
+                BREAK_DAYS {
+                    INT id PK
+                    INT studio_id FK
+                    DATE date
+                    TEXT reason
+                    TIMESTAMP created_at
+                }
+
+                STUDIO ||--o{ SERVICE : "offers"
+                STUDIO ||--o{ AVAILABILITY : "has"
+                STUDIO ||--o{ BOOKINGS : "receives"
+                STUDIO ||--o{ BREAK_DAYS : "sets"
+                STUDIO ||--o| STUDIO_OWNER : "owned_by"
+                CUSTOMER ||--o{ BOOKINGS : "makes"
+                SERVICE ||--o{ BOOKINGS : "booked_for"
+                SERVICE ||--o{ PACKAGE : "has"
+        </div>
+    </div>
+</body>
+</html>
