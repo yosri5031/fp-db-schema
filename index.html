@@ -44,6 +44,156 @@
     </style>
 </head>
 <body>
+      <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #555;
+        }
+        .table-container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            background-color: #fff;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            text-align: left;
+            padding: 8px;
+        }
+        table th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        table tr:hover {
+            background-color: #ddd;
+        }
+    </style>
+    <h1>Database Schema Detailed Tables</h1>
+
+    <div class="table-container">
+        <h2>Studio Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Constraints</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the studio.</td></tr>
+                <tr><td>name</td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Name of the studio.</td></tr>
+                <tr><td>address</td><td>TEXT</td><td>NOT NULL</td><td>Address of the studio.</td></tr>
+                <tr><td>city</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>City where the studio is located.</td></tr>
+                <tr><td>country</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>Country where the studio is located.</td></tr>
+                <tr><td>owner_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the studio owner.</td></tr>
+                <tr><td>phone</td><td>VARCHAR(20)</td><td>NULLABLE</td><td>Contact phone number of the studio.</td></tr>
+                <tr><td>email</td><td>VARCHAR(255)</td><td>NULLABLE, UNIQUE</td><td>Contact email of the studio.</td></tr>
+                <tr><td>logo</td><td>TEXT</td><td>NULLABLE</td><td>URL of the studio's logo.</td></tr>
+                <tr><td>images</td><td>TEXT[]</td><td>NULLABLE</td><td>List of URLs for studio images (gallery).</td></tr>
+                <tr><td>website</td><td>VARCHAR(255)</td><td>NULLABLE</td><td>Website link of the studio.</td></tr>
+                <tr><td>social_links</td><td>JSON</td><td>NULLABLE</td><td>Social media links (e.g., Instagram, Facebook).</td></tr>
+                <tr><td>description</td><td>TEXT</td><td>NULLABLE</td><td>Description of the studio.</td></tr>
+                <tr><td>latitude</td><td>DECIMAL(10, 8)</td><td>NOT NULL</td><td>Latitude for geolocation.</td></tr>
+                <tr><td>longitude</td><td>DECIMAL(11, 8)</td><td>NOT NULL</td><td>Longitude for geolocation.</td></tr>
+                <tr><td>is_active</td><td>BOOLEAN</td><td>DEFAULT TRUE</td><td>Indicates if the studio is active.</td></tr>
+                <tr><td>is_verified</td><td>BOOLEAN</td><td>DEFAULT FALSE</td><td>Indicates if the studio is verified.</td></tr>
+                <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the studio was created.</td></tr>
+                <tr><td>updated_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the studio was last updated.</td></tr>
+            </tbody>
+        </table>
+
+        <h2>Studio Owner Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Constraints</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the studio owner.</td></tr>
+                <tr><td>first_name</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>First name of the owner.</td></tr>
+                <tr><td>last_name</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>Last name of the owner.</td></tr>
+                <tr><td>email</td><td>VARCHAR(255)</td><td>NOT NULL, UNIQUE</td><td>Email address of the owner.</td></tr>
+                <tr><td>password</td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Encrypted password of the owner.</td></tr>
+                <tr><td>phone</td><td>VARCHAR(20)</td><td>NULLABLE</td><td>Contact phone number of the owner.</td></tr>
+                <tr><td>profile_image</td><td>TEXT</td><td>NULLABLE</td><td>URL to the owner's profile picture.</td></tr>
+                <tr><td>social_links</td><td>JSON</td><td>NULLABLE</td><td>Social links for the owner (e.g., Instagram).</td></tr>
+                <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the owner account was created.</td></tr>
+                <tr><td>updated_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the owner account was last updated.</td></tr>
+            </tbody>
+        </table>
+
+        <h2>Service Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Constraints</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the service.</td></tr>
+                <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>The studio offering the service.</td></tr>
+                <tr><td>name</td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Name of the service.</td></tr>
+                <tr><td>description</td><td>TEXT</td><td>NULLABLE</td><td>Description of the service.</td></tr>
+                <tr><td>category</td><td>ENUM('photo', 'video', 'event')</td><td>NOT NULL</td><td>Category of the service.</td></tr>
+                <tr><td>pricing_type</td><td>ENUM('fixed', 'package')</td><td>NOT NULL</td><td>Indicates if the service has fixed or package pricing.</td></tr>
+                <tr><td>fixed_price</td><td>DECIMAL(10, 2)</td><td>NULLABLE</td><td>Flat price for the service (if fixed pricing).</td></tr>
+                <tr><td>is_active</td><td>BOOLEAN</td><td>DEFAULT TRUE</td><td>Indicates if the service is active.</td></tr>
+                <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the service was created.</td></tr>
+                <tr><td>updated_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the service was last updated.</td></tr>
+            </tbody>
+        </table>
+
+        <h2>Package Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Constraints</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the package.</td></tr>
+                <tr><td>service_id</td><td>INT</td><td>FOREIGN KEY</td><td>The service to which the package belongs.</td></tr>
+                <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>The studio offering the package.</td></tr>
+                <tr><td>name</td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Name of the package.</td></tr>
+                <tr><td>description</td><td>TEXT</td><td>NOT NULL</td><td>Description of the package.</td></tr>
+                <tr><td>base_price</td><td>DECIMAL(10, 2)</td><td>NOT NULL</td><td>Base price for the package.</td></tr>
+                <tr><td>items</td><td>JSON</td><td>NULLABLE</td><td>Items included in the package (e.g., albums).</td></tr>
+                <tr><td>services</td><td>JSON</td><td>NULLABLE</td><td>Services included in the package.</td></tr>
+                <tr><td>valid_from</td><td>DATE</td><td>NOT NULL</td><td>Start date for the package.</td></tr>
+                <tr><td>valid_until</td><td>DATE</td><td>NOT NULL</td><td>End date for the package.</td></tr>
+                <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the package was created.</td></tr>
+            </tbody>
+        </table>
+    </div>
     <h1>Database Schema Overview</h1>
     <div class="button-container">
         <a href="https://mermaid.live/view#pako:eNrFVk1zmzAQ_SsanZtLj74pNk2pvzKGpM3UHY2MFqwxII8knHiS_PcK_AVYbpgkM-XG7kO7-_btomccSQ64h0ENBEsUy-Y5sk8Q3g38KXrevZWPPwmR4Oh2eDLdk1n_O5mhnGVwsoberxAxzhVofY6NhNk6rLLIjdo2o8nHHBS1Mb85Yq6XModzM2RMpK1cUpnIpun3HyQyloAjv0dYaGFqJ_8IphOkZSRYSlORr3TrdA46UmJthMzPT1sUWuSWB6ogEdoo5oYZ9mTrPNkHXt8fkxFKLd4UHBwemSct1_V0OvLIBAlNWWTExu3agBKxgFqw0B97QUjGtyhSwAxwyozLW6x5w_s6z-taodOfE2_WUTGxUNrQpm4OvpRddLW6e9QC0_pRKv6mSqqGrZWMRQq0UkC3Pn-YIW927_e9N8gpTdr2VMhLoncMmlN-3uRujCKbSyLrQ1WZ10pEIk-o2a4duorFky2gxHRT1oepuSX9IbnpRA2ojU2rzc3nsXbgYME0tCmo1GH3QqbbitllVTMPSOihDUsFp7GSmdNht11dyP8geNczFq2sWFs9-zD35J74I3Ltj_zw4d3arKoqAzRDWzRThhqRtR2Q85a5Vv5CylW35XSswn499Cc3wbsreENcUaGNzM7_RJcKb9ZW9c9yYQp9rjQjjd02Lal1KLl_F4TT8f_atq2d2qFDM48M6YA8BJ-qsnKQbUhdn-EO2eyvNi8vV1fy-biae2iOZRyD0nPswjVmpQQv2QXkUY8lSkEEdp4vQU_ElGANxgl8af5iq1Tt3YjTxfYAPyrClUTGVrUM9gW7gLvpo7FUF9CHbX0kAH_BdjSsULi9Q1bNnWOzBCsnXGI4xKxITXnaq4Wywshgm0e4Z1QBX_BuM-0vngejkkWyxL2Ypdq-Jao8eu-xqwNUv7wr4t7X179Sjwky" target="_blank">
