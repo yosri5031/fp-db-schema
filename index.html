@@ -263,17 +263,17 @@
         </thead>
         <tbody>
             <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the studio.</td></tr>
-            <tr><td>name</td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Name of the studio (e.g., "Capture Perfect").</td></tr>
-            <tr><td>address</td><td>TEXT</td><td>NOT NULL</td><td>Address of the studio (e.g., "123 Photography Lane").</td></tr>
+            <tr><td>name</td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Name of the studio (e.g., "ABCC").</td></tr>
+            <tr><td>address</td><td>TEXT</td><td>NOT NULL</td><td>Address of the studio .</td></tr>
             <tr><td>city</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>City where the studio is located (e.g., "New York").</td></tr>
             <tr><td>country</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>Country where the studio is located (e.g., "USA").</td></tr>
             <tr><td>owner_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the studio owner.</td></tr>
-            <tr><td>phone</td><td>VARCHAR(20)</td><td>NULLABLE</td><td>Contact phone number of the studio (e.g., "+1-555-123-4567").</td></tr>
-            <tr><td>email</td><td>VARCHAR(255)</td><td>NULLABLE, UNIQUE</td><td>Contact email of the studio (e.g., "info@captureperfect.com").</td></tr>
+            <tr><td>phone</td><td>VARCHAR(20)</td><td>NULLABLE</td><td>Contact phone number of the studio (e.g., "+1-XXX").</td></tr>
+            <tr><td>email</td><td>VARCHAR(255)</td><td>NULLABLE, UNIQUE</td><td>Contact email of the studio .</td></tr>
             <tr><td>logo</td><td>TEXT</td><td>NULLABLE</td><td>URL of the studio's logo.</td></tr>
             <tr><td>images</td><td>TEXT[]</td><td>NULLABLE</td><td>List of URLs for studio images (gallery).</td></tr>
-            <tr><td>website</td><td>VARCHAR(255)</td><td>NULLABLE</td><td>Website link of the studio (e.g., "www.captureperfect.com").</td></tr>
-            <tr><td>social_links</td><td>JSON</td><td>NULLABLE</td><td>Social media links (e.g., {"instagram": "capture_perfect", "facebook": "captureperfect"}).</td></tr>
+            <tr><td>website</td><td>VARCHAR(255)</td><td>NULLABLE</td><td>Website link of the studio .</td></tr>
+            <tr><td>social_links</td><td>JSON</td><td>NULLABLE</td><td>Social media links (e.g., {"instagram", "facebook"}).</td></tr>
             <tr><td>description</td><td>TEXT</td><td>NULLABLE</td><td>Description of the studio's services and specialties.</td></tr>
             <tr><td>business_registration</td><td>VARCHAR(100)</td><td>NULLABLE</td><td>Business registration number (e.g., "BR12345678").</td></tr>
             <tr><td>tax_id</td><td>VARCHAR(50)</td><td>NULLABLE</td><td>Tax identification number (e.g., "TX987654321").</td></tr>
@@ -300,13 +300,13 @@
         </thead>
         <tbody>
             <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the studio owner.</td></tr>
-            <tr><td>first_name</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>First name of the owner (e.g., "John").</td></tr>
-            <tr><td>last_name</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>Last name of the owner (e.g., "Smith").</td></tr>
-            <tr><td>email</td><td>VARCHAR(255)</td><td>NOT NULL, UNIQUE</td><td>Email address of the owner (e.g., "john.smith@captureperfect.com").</td></tr>
+            <tr><td>first_name</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>First name of the owner .</td></tr>
+            <tr><td>last_name</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>Last name of the owner .</td></tr>
+            <tr><td>email</td><td>VARCHAR(255)</td><td>NOT NULL, UNIQUE</td><td>Email address of the owner ).</td></tr>
             <tr><td>password</td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Encrypted password of the owner.</td></tr>
-            <tr><td>phone</td><td>VARCHAR(20)</td><td>NULLABLE</td><td>Contact phone number of the owner (e.g., "+1-555-987-6543").</td></tr>
+            <tr><td>phone</td><td>VARCHAR(20)</td><td>NULLABLE</td><td>Contact phone number of the owner.</td></tr>
             <tr><td>profile_image</td><td>TEXT</td><td>NULLABLE</td><td>URL to the owner's profile picture.</td></tr>
-            <tr><td>social_links</td><td>JSON</td><td>NULLABLE</td><td>Social links for the owner (e.g., {"instagram": "johnsmith_photo"}).</td></tr>
+            <tr><td>social_links</td><td>JSON</td><td>NULLABLE</td><td>Social links for the owner.</td></tr>
             <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the owner account was created.</td></tr>
             <tr><td>updated_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the owner account was last updated.</td></tr>
         </tbody>
@@ -421,10 +421,10 @@
         </thead>
         <tbody>
             <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the customer.</td></tr>
-            <tr><td>first_name</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>First name of the customer (e.g., "Jane").</td></tr>
-            <tr><td>last_name</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>Last name of the customer (e.g., "Doe").</td></tr>
-            <tr><td>email</td><td>VARCHAR(255)</td><td>NOT NULL, UNIQUE</td><td>Email address of the customer (e.g., "jane.doe@email.com").</td></tr>
-            <tr><td>phone</td><td>VARCHAR(20)</td><td>NULLABLE</td><td>Contact phone number of the customer (e.g., "+1-555-765-4321").</td></tr>
+            <tr><td>first_name</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>First name of the custome.</td></tr>
+            <tr><td>last_name</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>Last name of the customer.</td></tr>
+            <tr><td>email</td><td>VARCHAR(255)</td><td>NOT NULL, UNIQUE</td><td>Email address of the customer.</td></tr>
+            <tr><td>phone</td><td>VARCHAR(20)</td><td>NULLABLE</td><td>Contact phone number of the customer.</td></tr>
             <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the customer account was created.</td></tr>
         </tbody>
     </table>
