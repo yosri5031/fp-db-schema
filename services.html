@@ -1,0 +1,431 @@
+<html>
+<head>
+
+</head>
+<body>
+<div>
+  <a href="https://yosri5031.github.io/fp-db-schema" > Back To Home</a>
+</div>
+<!-- Services Page -->
+<div id="services-page" class="page-content hidden">
+    <div class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between">
+        <div>
+            <h1 class="text-2xl font-bold mb-1">Services Management</h1>
+            <p class="text-gray-600">Manage your studio's service offerings</p>
+        </div>
+        <div class="mt-4 md:mt-0">
+            <button class="bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2 rounded-lg flex items-center">
+                <i class="fas fa-plus mr-2"></i> New Service
+            </button>
+        </div>
+    </div>
+    
+    <!-- Services Tabs -->
+    <div class="bg-white rounded-lg shadow mb-6">
+        <div class="flex overflow-x-auto">
+            <a href="#" class="tab-link active whitespace-nowrap px-4 py-3 text-sm font-medium border-b-2 border-yellow-400 text-yellow-500" data-tab="all-services">
+                All Services
+            </a>
+            <a href="#" class="tab-link whitespace-nowrap px-4 py-3 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="active">
+                Active
+            </a>
+            <a href="#" class="tab-link whitespace-nowrap px-4 py-3 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="inactive">
+                Inactive
+            </a>
+            <a href="#" class="tab-link whitespace-nowrap px-4 py-3 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="categories">
+                Categories
+            </a>
+            <a href="#" class="tab-link whitespace-nowrap px-4 py-3 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="pricing">
+                Pricing
+            </a>
+        </div>
+    </div>
+    
+    <!-- Services Dashboard -->
+    <div class="bg-white rounded-lg shadow p-4 mb-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="p-4 border border-gray-200 rounded-lg">
+                <div class="flex items-center justify-between">
+                    <div class="text-sm text-gray-500">Total Services</div>
+                    <div class="p-2 bg-yellow-100 text-yellow-800 rounded-full">
+                        <i class="fas fa-box-open"></i>
+                    </div>
+                </div>
+                <div class="mt-2 text-2xl font-bold">4</div>
+            </div>
+            
+            <div class="p-4 border border-gray-200 rounded-lg">
+                <div class="flex items-center justify-between">
+                    <div class="text-sm text-gray-500">Active Services</div>
+                    <div class="p-2 bg-green-100 text-green-800 rounded-full">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                </div>
+                <div class="mt-2 text-2xl font-bold">4</div>
+            </div>
+            
+            <div class="p-4 border border-gray-200 rounded-lg">
+                <div class="flex items-center justify-between">
+                    <div class="text-sm text-gray-500">Most Booked</div>
+                    <div class="p-2 bg-blue-100 text-blue-800 rounded-full">
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="mt-2 text-xl font-bold">Portrait Session</div>
+                <div class="text-sm text-gray-500">32 bookings</div>
+            </div>
+            
+            <div class="p-4 border border-gray-200 rounded-lg">
+                <div class="flex items-center justify-between">
+                    <div class="text-sm text-gray-500">Total Revenue</div>
+                    <div class="p-2 bg-purple-100 text-purple-800 rounded-full">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                </div>
+                <div class="mt-2 text-2xl font-bold">$22,700</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Services List -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Service Card 1 -->
+        <div class="bg-white rounded-lg shadow overflow-hidden">
+            <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                <h3 class="font-semibold">Portrait Session</h3>
+                <div class="flex">
+                    <span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">Active</span>
+                </div>
+            </div>
+            <div class="p-4">
+                <div class="flex justify-between mb-3">
+                    <div>
+                        <div class="text-sm text-gray-500">Category</div>
+                        <div class="font-medium">Portrait</div>
+                    </div>
+                    <div>
+                        <div class="text-sm text-gray-500">Duration</div>
+                        <div class="font-medium">60 min</div>
+                    </div>
+                    <div>
+                        <div class="text-sm text-gray-500">Price</div>
+                        <div class="font-medium">$150.00</div>
+                    </div>
+                </div>
+                
+                <div class="text-sm text-gray-600 mb-4">
+                    Professional portrait session in studio with multiple backgrounds.
+                </div>
+                
+                <div class="flex items-center justify-between border-t border-gray-200 pt-3">
+                    <div>
+                        <div class="text-xs text-gray-500">Bookings</div>
+                        <div class="font-medium">32</div>
+                    </div>
+                    
+                    <div class="flex space-x-2">
+                        <button class="p-2 text-sm rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="p-2 text-sm rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                        <button class="p-2 text-sm rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700">
+                            <i class="fas fa-chart-line"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Service Card 2 -->
+        <div class="bg-white rounded-lg shadow overflow-hidden">
+            <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                <h3 class="font-semibold">Wedding Package</h3>
+                <div class="flex">
+                    <span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">Active</span>
+                </div>
+            </div>
+            <div class="p-4">
+                <div class="flex justify-between mb-3">
+                    <div>
+                        <div class="text-sm text-gray-500">Category</div>
+                        <div class="font-medium">Event</div>
+                    </div>
+                    <div>
+                        <div class="text-sm text-gray-500">Duration</div>
+                        <div class="font-medium">8 hours</div>
+                    </div>
+                    <div>
+                        <div class="text-sm text-gray-500">Price</div>
+                        <div class="font-medium">$1,500.00</div>
+                    </div>
+                </div>
+                
+                <div class="text-sm text-gray-600 mb-4">
+                    Complete wedding day coverage including engagement session.
+                </div>
+                
+                <div class="flex items-center justify-between border-t border-gray-200 pt-3">
+                    <div>
+                        <div class="text-xs text-gray-500">Bookings</div>
+                        <div class="font-medium">8</div>
+                    </div>
+                    
+                    <div class="flex space-x-2">
+                        <button class="p-2 text-sm rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="p-2 text-sm rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                        <button class="p-2 text-sm rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700">
+                            <i class="fas fa-chart-line"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Service Card 3 -->
+        <div class="bg-white rounded-lg shadow overflow-hidden">
+            <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                <h3 class="font-semibold">Product Photography</h3>
+                <div class="flex">
+                    <span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">Active</span>
+                </div>
+            </div>
+            <div class="p-4">
+                <div class="flex justify-between mb-3">
+                    <div>
+                        <div class="text-sm text-gray-500">Category</div>
+                        <div class="font-medium">Commercial</div>
+                    </div>
+                    <div>
+                        <div class="text-sm text-gray-500">Duration</div>
+                        <div class="font-medium">30 min</div>
+                    </div>
+                    <div>
+                        <div class="text-sm text-gray-500">Price</div>
+                        <div class="font-medium">$100.00</div>
+                    </div>
+                </div>
+                
+                <div class="text-sm text-gray-600 mb-4">
+                    Clean professional product photography for e-commerce.
+                </div>
+                
+                <div class="flex items-center justify-between border-t border-gray-200 pt-3">
+                    <div>
+                        <div class="text-xs text-gray-500">Bookings</div>
+                        <div class="font-medium">15</div>
+                    </div>
+                    
+                    <div class="flex space-x-2">
+                        <button class="p-2 text-sm rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="p-2 text-sm rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                        <button class="p-2 text-sm rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700">
+                            <i class="fas fa-chart-line"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Service Card 4 -->
+        <div class="bg-white rounded-lg shadow overflow-hidden">
+            <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                <h3 class="font-semibold">Family Portrait</h3>
+                <div class="flex">
+                    <span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">Active</span>
+                </div>
+            </div>
+            <div class="p-4">
+                <div class="flex justify-between mb-3">
+                    <div>
+                        <div class="text-sm text-gray-500">Category</div>
+                        <div class="font-medium">Portrait</div>
+                    </div>
+                    <div>
+                        <div class="text-sm text-gray-500">Duration</div>
+                        <div class="font-medium">90 min</div>
+                    </div>
+                    <div>
+                        <div class="text-sm text-gray-500">Price</div>
+                        <div class="font-medium">$200.00</div>
+                    </div>
+                </div>
+                
+                <div class="text-sm text-gray-600 mb-4">
+                    Family portrait session for up to 6 people.
+                </div>
+                
+                <div class="flex items-center justify-between border-t border-gray-200 pt-3">
+                    <div>
+                        <div class="text-xs text-gray-500">Bookings</div>
+                        <div class="font-medium">22</div>
+                    </div>
+                    
+                    <div class="flex space-x-2">
+                        <button class="p-2 text-sm rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="p-2 text-sm rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                        <button class="p-2 text-sm rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700">
+                            <i class="fas fa-chart-line"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Add New Service Card -->
+        <div class="bg-white rounded-lg shadow border-2 border-dashed border-gray-300 flex items-center justify-center min-h-52">
+            <div class="text-center p-8">
+                <div class="mx-auto w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mb-3">
+                    <i class="fas fa-plus text-gray-500"></i>
+                </div>
+                <h3 class="text-lg font-medium text-gray-900">Add New Service</h3>
+                <p class="mt-1 text-sm text-gray-500">Create a new service offering for your customers</p>
+                <button class="mt-3 px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-black rounded-lg text-sm">
+                    Create Service
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Service Detail Modal (Hidden by default) -->
+    <div id="service-detail-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-lg shadow-lg max-w-3xl w-full max-h-screen overflow-y-auto">
+            <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                <h2 class="text-lg font-semibold">Edit Service</h2>
+                <button id="close-service-modal-btn" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="p-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Basic Information -->
+                    <div class="md:col-span-2">
+                        <h3 class="text-sm font-medium text-gray-700 mb-3">Basic Information</h3>
+                    </div>
+                    
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Service Name</label>
+                        <input type="text" value="Portrait Session" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                        <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent">
+                            <option>Portrait</option>
+                            <option>Event</option>
+                            <option>Commercial</option>
+                            <option>Wedding</option>
+                            <option>Product</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                        <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent">
+                            <option>Active</option>
+                            <option>Inactive</option>
+                        </select>
+                    </div>
+                    
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                        <textarea rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent">Professional portrait session in studio with multiple backgrounds.</textarea>
+                    </div>
+                    
+                    <!-- Pricing -->
+                    <div class="md:col-span-2 pt-3">
+                        <h3 class="text-sm font-medium text-gray-700 mb-3">Pricing</h3>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Pricing Type</label>
+                        <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent">
+                            <option>Fixed</option>
+                            <option>Variable</option>
+                            <option>Hourly</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Price ($)</label>
+                        <input type="text" value="150.00" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Duration</label>
+                        <input type="text" value="60" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Duration Unit</label>
+                        <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent">
+                            <option>Minutes</option>
+                            <option>Hours</option>
+                            <option>Days</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Advanced Settings -->
+                    <div class="md:col-span-2 pt-3">
+                        <h3 class="text-sm font-medium text-gray-700 mb-3">Advanced Settings</h3>
+                    </div>
+                    
+                    <div>
+                        <div class="flex items-center justify-between">
+                            <label class="text-sm text-gray-700">Available for Online Booking</label>
+                            <label class="flex items-center cursor-pointer">
+                                <div class="relative">
+                                    <input type="checkbox" class="sr-only" checked>
+                                    <div class="w-10 h-5 bg-gray-200 rounded-full shadow-inner"></div>
+                                    <div class="dot absolute w-5 h-5 bg-yellow-400 rounded-full shadow -left-1 -top-0 transition transform translate-x-5"></div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="flex items-center justify-between">
+                            <label class="text-sm text-gray-700">Show in Featured Services</label>
+                            <label class="flex items-center cursor-pointer">
+                                <div class="relative">
+                                    <input type="checkbox" class="sr-only">
+                                    <div class="w-10 h-5 bg-gray-200 rounded-full shadow-inner"></div>
+                                    <div class="dot absolute w-5 h-5 bg-gray-400 rounded-full shadow -left-1 -top-0 transition"></div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Additional Notes</label>
+                        <textarea rows="2" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent" placeholder="Any internal notes about this service"></textarea>
+                    </div>
+                </div>
+                
+                <div class="mt-6 border-t border-gray-200 pt-4 flex justify-end space-x-3">
+                    <button class="px-4 py-2 border border-gray-300 rounded text-sm hover:bg-gray-50">
+                        Cancel
+                    </button>
+                    <button class="px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-black rounded text-sm">
+                        Save Changes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
