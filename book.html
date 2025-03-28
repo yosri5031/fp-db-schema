@@ -86,20 +86,35 @@ function initDashboard() {
 
 // Sidebar toggle functionality
 function setupSidebarToggle() {
-  elements.openSidebarBtn.addEventListener('click', () => {
-    elements.sidebar.classList.add('open');
-    elements.sidebarOverlay.classList.remove('hidden');
-  });
+  // Get the correct element references
+  const openSidebarBtn = document.getElementById('open-sidebar-btn');
+  const closeSidebarBtn = document.getElementById('close-sidebar-btn');
+  const sidebar = document.getElementById('sidebar');
+  const sidebarOverlay = document.getElementById('sidebar-overlay');
   
-  elements.closeSidebarBtn.addEventListener('click', () => {
-    elements.sidebar.classList.remove('open');
-    elements.sidebarOverlay.classList.add('hidden');
-  });
+  // Make sure the elements exist before adding event listeners
+  if (openSidebarBtn) {
+    openSidebarBtn.addEventListener('click', function() {
+      sidebar.classList.add('open');
+      sidebarOverlay.classList.remove('hidden');
+      console.log('Sidebar opened'); // Debug info
+    });
+  }
   
-  elements.sidebarOverlay.addEventListener('click', () => {
-    elements.sidebar.classList.remove('open');
-    elements.sidebarOverlay.classList.add('hidden');
-  });
+  if (closeSidebarBtn) {
+    closeSidebarBtn.addEventListener('click', function() {
+      sidebar.classList.remove('open');
+      sidebarOverlay.classList.add('hidden');
+      console.log('Sidebar closed'); // Debug info
+    });
+  }
+  
+  if (sidebarOverlay) {
+    sidebarOverlay.addEventListener('click', function() {
+      sidebar.classList.remove('open');
+      sidebarOverlay.classList.add('hidden');
+    });
+  }
 }
 
 // Page navigation
