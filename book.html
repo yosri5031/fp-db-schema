@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreezePix - Studio Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script>
+/**
+ * FreezePix Studio Dashboard JavaScript
+ * This file contains all the interactive functionality for the dashboard
+ */
+
+// Global state for the dashboard
+const state = {
+  activeTab: 'dashboard',
+  activeSubTab: 'overview',
+  notifications: [
+    { id: 1, type: 'booking', message: 'New booking request from Maria Garcia', time: '2 hours ago', isRead: false },
+    { id: 2, type: 'rating', message: 'New 5-star review from Jamie Smith', time: '1 day ago', isRead: true },
+    { id: 3, type: 'system', message: 'Your subscription will renew in 7 days', time: '2 days ago', isRead: false }
+  ],
+  services: [
+    { id: 1, name: 'Portrait Session', category: 'portrait', price: 150, duration: 60, description: 'Professional portrait session in studio with multiple backgrounds.', isActive: true, bookings: 32 },
+    { id: 2, name: 'Wedding Package', category: 'event', price: 1500, duration: 480, description: 'Complete wedding day coverage including engagement session.', isActive: true, bookings: 8 },
+    { id: 3, name: 'Product Photography', category: 'commercial', price: 100, duration: 30, description: 'Clean professional product photography for e-commerce.', isActive: true, bookings: 15 },
+    { id: 4, name: 'Family Portrait', category: 'portrait', price: 200, duration: 90, description: 'Family portrait session for up to 6 people.', isActive: true, bookings: 22 }
+  ],
+  bookings: [
+    { id: 1, customer: { id: 101, name: 'Alex Johnson', email: 'alex@example.com', phone: '+1 (555) 234-5678' }, serviceId: 1, serviceName: 'Portrait Session', date: '2025-04-02', startTime: '14:00', endTime: '15:00', status: 'confirmed', price: 150, notes: 'Client requested blue background', isRated: false },
+    { id: 2, customer: { id: 102, name: 'Maria Garcia', email: 'maria@example.com', phone: '+1 (555) 345-6789' }, serviceId: 2, serviceName: 'Wedding Package', date: '2025-04-05', startTime: '10:00', endTime: '18:00', status: 'pending', price: 1500, notes: 'Venue: Grand Hotel, Downtown', isRated: false },
+    { id: 3, customer: { id: 103, name: 'Sam Lee', email: 'sam@example.com', phone: '+1 (555) 456-7890' }, serviceId: 3, serviceName: 'Product Photography', date: '2025-04-07', startTime: '15:30', endTime: '16:00', status: 'confirmed', price: 100, notes: '5 products, white background', isRated: false },
+    { id: 4, customer: { id: 104, name: 'Jamie Smith', email: 'jamie@example.com', phone: '+1 (555) 567-8901' }, serviceId: 4, serviceName: 'Family Portrait', date: '2025-03-25', startTime: '11:00', endTime: '12:30', status: 'completed', price: 200, notes: 'Family of 5, including dog', isRated: true }
+  ],
+  financialData: {
+    monthlyRevenue: [
+      { month: 'Jan', revenue: 3250 },
+      { month: 'Feb', revenue: 4100 },
+      { month: 'Mar', revenue: 3800 },
+      { month: 'Apr', revenue: 2000 }
+    ]
+  }
+};
+
+// DOM Elements
+const elements = {
+  sidebar: document.getElementById('sidebar'),
+  sidebarOverlay: document.getElementById('sidebar-overlay'),
+  openSidebarBtn: document.getElementById('open-sidebar-btn'),
+  closeSidebarBtn: document.getElementById('close-sidebar-btn'),
+  sidebarLinks: document.querySelectorAll('.sidebar-link'),
+  pages: document.querySelectorAll('.page-content'),
+  pageTitle: document.getElementById('page-title'),
+  bookingsTabs: document.getElementById('bookings-tabs'),
+  servicesTabs: document.getElementById('services-tabs'),
+  reportsTabs: document.getElementById('reports-tabs'),
+  tabLinks: document.querySelectorAll('.tab-link'),
+  notificationsBtn: document.getElementById('notifications-btn'),
+  notificationsDropdown: document.getElementById('notifications-dropdown'),
+  userMenuBtn: document.getElementById('user-menu-btn'),
+  userMenuDropdown: document.getElementById('user-menu-dropdown'),
+  bookingDetailsModal: document.getElementById('booking-details-modal'),
+  closeModalBtn: document.getElementById('close-modal-btn'),
+  bookingCards: document.querySelectorAll('.booking-card'),
+  notificationDot: document.querySelector('.notification-dot'),
+  toggleSwitches: document.querySelectorAll('input[type="checkbox"]')
+};
+
+// Initialize the dashboard
+function initDashboard() {
+  // Set up event listeners
+  setupSidebarToggle();
+  setupNavigation();
+  setupDropdowns();
+  setupModals();
+  setupToggles();
+  setupBookingCards();
+  
+  // Initialize any visualizations or charts
+  initCharts();
+  
+  // Initialize animations
+  initAnimations();
+}
+
+// Sidebar toggle functionality
+function setupSidebarToggle() {
+  elements.openSidebarBtn.addEventListener('click', () => {
+    elements.sidebar.classList.add('open');
+    elements.sidebarOverlay.classList.remove('hidden');
+  });
+  
+  elements.closeSidebarBtn.addEventListener('click', () => {
+    elements.sidebar.classList.remove('open');
+    elements.sidebarOverlay.classList.add('hidden');
+  });
+  
+  elements.sidebarOverlay.addEventListener('click', () => {
+    elements.sidebar.classList.remove('open');
+    elements.sidebarOverlay.classList.add('hidden');
+  });
+}
+
+// Page navigation
+function setupNavigation() {
+  elements.sidebarLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      
+      // Update active sidebar link
+      elements.sidebarLinks.forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
+      
+      // Hide all pages
+      elements.pages.forEach(page => page.classList.add('hidden'));
+      
+      // Show selected page
+      const pageName = link.getAttribute('data-page');
+      const selectedPage = document.getElementById(`${pageName}-page`);
+      if (selectedPage) {
+        selectedPage.classList.remove('hidden');
+        selectedPage.classList.add('fade-in');
+        
+        // Update state
+        state.activeTab = pageName;
+      }
+      
+      // Update page title
+      elements.pageTitle.textContent = link.textContent.trim();
+      
+      // Handle sub navigation
+      elements.bookingsTabs.classList.add('hidden');
+      elements.servicesTabs.classList.add('hidden');
+      elements.reportsTabs.classList.add('hidden');
+      
+      if (pageName === 'bookings') {
+        elements.bookingsTabs.classList.remove('hidden');
+      } else if (pageName === 'services') {
+        elements.servicesTabs.classList.remove('hidden');
+      } else if (pageName === 'reports') {
+        elements.reportsTabs.classList.remove('hidden');
+      }
+      
+      // Close mobile sidebar
+      elements.sidebar.classList.remove('open');
+      elements.sidebarOverlay.classList.add('hidden');
+    });
+  });
+  
+  // Tab navigation
+  elements.tabLinks.forEach(tab => {
+    tab.addEventListener('click', (e) => {
+      e.preventDefault();
+      
+      // Get all tabs in the same group
+      const tabGroup = tab.parentElement;
+      const tabs = tabGroup.querySelectorAll('.tab-link');
+      
+      // Update active tab
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      
+      // Update state
+      state.activeSubTab = tab.getAttribute('data-tab');
+      
+      // You could add logic here to show/hide content based on selected tab
+    });
+  });
+}
+
+// Dropdown functionality
+function setupDropdowns() {
+  // Notifications dropdown
+  elements.notificationsBtn.addEventListener('click', () => {
+    elements.notificationsDropdown.classList.toggle('hidden');
+    elements.userMenuDropdown.classList.add('hidden'); // Close user menu if open
+  });
+  
+  // User menu dropdown
+  elements.userMenuBtn.addEventListener('click', () => {
+    elements.userMenuDropdown.classList.toggle('hidden');
+    elements.notificationsDropdown.classList.add('hidden'); // Close notifications if open
+  });
+  
+  // Close dropdowns when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!elements.notificationsBtn.contains(e.target) && !elements.notificationsDropdown.contains(e.target)) {
+      elements.notificationsDropdown.classList.add('hidden');
+    }
+    
+    if (!elements.userMenuBtn.contains(e.target) && !elements.userMenuDropdown.contains(e.target)) {
+      elements.userMenuDropdown.classList.add('hidden');
+    }
+  });
+  
+  // Update notification count
+  updateNotificationCount();
+}
+
+// Modal functionality
+function setupModals() {
+  // Close modal button
+  elements.closeModalBtn.addEventListener('click', () => {
+    elements.bookingDetailsModal.classList.add('hidden');
+  });
+  
+  // Close modal when clicking outside
+  elements.bookingDetailsModal.addEventListener('click', (e) => {
+    if (e.target === elements.bookingDetailsModal) {
+      elements.bookingDetailsModal.classList.add('hidden');
+    }
+  });
+}
+
+// Toggle switches styling
+function setupToggles() {
+  elements.toggleSwitches.forEach(toggle => {
+    toggle.addEventListener('change', () => {
+      const dot = toggle.parentElement.querySelector('.dot');
+      if (toggle.checked) {
+        dot.classList.add('translate-x-5');
+      } else {
+        dot.classList.remove('translate-x-5');
+      }
+      
+      // You could update service status in state here
+    });
+    
+    // Initialize positions
+    const dot = toggle.parentElement.querySelector('.dot');
+    if (toggle.checked) {
+      dot.classList.add('translate-x-5');
+    }
+  });
+}
+
+// Booking cards functionality
+function setupBookingCards() {
+  elements.bookingCards.forEach(card => {
+    card.addEventListener('click', () => {
+      openBookingDetails();
+    });
+  });
+}
+
+// Open booking details modal
+function openBookingDetails(bookingId) {
+  // You could load booking details based on bookingId here
+  elements.bookingDetailsModal.classList.remove('hidden');
+}
+
+// Update notification count
+function updateNotificationCount() {
+  const unreadCount = state.notifications.filter(notification => !notification.isRead).length;
+  if (unreadCount > 0) {
+    elements.notificationDot.textContent = unreadCount;
+    elements.notificationDot.classList.remove('hidden');
+  } else {
+    elements.notificationDot.classList.add('hidden');
+  }
+}
+
+// Mark notification as read
+function markNotificationAsRead(id) {
+  state.notifications = state.notifications.map(notification => 
+    notification.id === id ? {...notification, isRead: true} : notification
+  );
+  updateNotificationCount();
+}
+
+// Initialize charts
+function initCharts() {
+  // This is where you would initialize any charts using Chart.js, D3, etc.
+  // For the static HTML version, we're using images as placeholders
+}
+
+// Initialize animations
+function initAnimations() {
+  // Profile completion bar animation
+  setTimeout(() => {
+    const progressBar = document.querySelector('.profile-completion-progress');
+    if (progressBar) {
+      progressBar.style.width = "95%";
+    }
+  }, 500);
+}
+
+// Call init function when DOM is loaded
+document.addEventListener('DOMContentLoaded', initDashboard);
+</script>
+    <style>
+       /* FreezePix Studio Dashboard - Custom CSS */
+
+/* ===== Variables ===== */
+:root {
+  --primary: #FBBF24;
+  --primary-dark: #F59E0B;
+  --primary-light: #FDE68A;
+  --dark: #000000;
+  --dark-gray: #374151;
+  --medium-gray: #6B7280;
+  --light-gray: #F3F4F6;
+  --white: #FFFFFF;
+  --success: #10B981;
+  --warning: #F59E0B;
+  --danger: #EF4444;
+  --info: #3B82F6;
+}
+
+/* ===== Global Styles ===== */
+body {
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--light-gray);
+  color: #1F2937;
+}
+
+.pixelated {
+  image-rendering: pixelated;
+}
+
+/* ===== Animations ===== */
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.slide-in {
+  animation: slideIn 0.3s ease-in-out;
+}
+
+@keyframes slideIn {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* ===== Logo Styles ===== */
+.logo-text {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+}
+
+.logo-text span {
+  color: var(--primary);
+}
+
+.logo-tagline {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+/* ===== Pixel Elements ===== */
+.pixel-corner {
+  position: relative;
+}
+
+.pixel-corner::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 10px;
+  height: 10px;
+  background-color: var(--primary);
+}
+
+.pixel-border {
+  position: relative;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.pixel-border::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  bottom: -2px;
+  left: -2px;
+  right: -2px;
+  background: repeating-linear-gradient(
+    0deg,
+    var(--primary),
+    var(--primary) 5px,
+    transparent 5px,
+    transparent 10px
+  );
+  z-index: -1;
+}
+
+/* ===== Sidebar Styles ===== */
+.sidebar {
+  background-color: var(--dark);
+  transition: transform 0.3s ease-in-out;
+}
+
+.sidebar-link {
+  transition: all 0.2s ease-in-out;
+}
+
+.sidebar-link.active {
+  background-color: var(--primary);
+  color: var(--dark);
+  font-weight: 500;
+}
+
+.sidebar-link:hover:not(.active) {
+  background-color: var(--dark-gray);
+}
+
+.profile-completion-progress {
+  transition: width 1s ease-in-out;
+}
+
+/* ===== Button Styles ===== */
+.btn-primary {
+  background-color: var(--primary);
+  color: var(--dark);
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-dark);
+}
+
+.btn-outline {
+  border: 1px solid var(--medium-gray);
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-outline:hover {
+  background-color: var(--light-gray);
+}
+
+/* ===== Card and Container Styles ===== */
+.card {
+  background-color: var(--white);
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease-in-out;
+}
+
+.card:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-highlight {
+  border-left: 4px solid var(--primary);
+}
+
+.container-smooth {
+  border-radius: 1rem;
+  padding: 1.5rem;
+  background-color: var(--white);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* ===== Table Styles ===== */
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-header {
+  background-color: var(--light-gray);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.75rem;
+  color: var(--medium-gray);
+}
+
+.table-row {
+  border-bottom: 1px solid var(--light-gray);
+  transition: background-color 0.2s ease-in-out;
+}
+
+.table-row:hover {
+  background-color: rgba(251, 191, 36, 0.05);
+}
+
+/* ===== Status Badges ===== */
+.badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.badge-success {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: var(--success);
+}
+
+.badge-warning {
+  background-color: rgba(245, 158, 11, 0.1);
+  color: var(--warning);
+}
+
+.badge-danger {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: var(--danger);
+}
+
+.badge-info {
+  background-color: rgba(59, 130, 246, 0.1);
+  color: var(--info);
+}
+
+/* ===== Form Styles ===== */
+.form-input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--medium-gray);
+  border-radius: 0.375rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.2);
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--dark-gray);
+}
+
+/* ===== Toggle Switch ===== */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .toggle-slider {
+  background-color: var(--primary);
+}
+
+input:focus + .toggle-slider {
+  box-shadow: 0 0 1px var(--primary);
+}
+
+input:checked + .toggle-slider:before {
+  transform: translateX(20px);
+}
+
+/* ===== Calendar Styles ===== */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.calendar-day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.calendar-day:hover:not(.calendar-day-disabled) {
+  background-color: rgba(251, 191, 36, 0.1);
+}
+
+.calendar-day.has-booking {
+  background-color: rgba(251, 191, 36, 0.2);
+  border: 1px solid var(--primary);
+}
+
+.calendar-day.break-day {
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid var(--danger);
+}
+
+.calendar-day.calendar-day-disabled {
+  color: var(--medium-gray);
+  pointer-events: none;
+}
+
+.calendar-day.today {
+  background-color: var(--primary);
+  color: var(--dark);
+  font-weight: 600;
+}
+
+/* ===== Modal Styles ===== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.modal-content {
+  background-color: var(--white);
+  border-radius: 0.5rem;
+  width: 100%;
+  max-width: 32rem;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+  padding: 1rem;
+  border-bottom: 1px solid var(--light-gray);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-body {
+  padding: 1rem;
+}
+
+.modal-footer {
+  padding: 1rem;
+  border-top: 1px solid var(--light-gray);
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 640px) {
+  .calendar-day {
+    font-size: 0.75rem;
+  }
+  
+  .container-smooth {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+  
+  .sidebar.open {
+    transform: translateX(0);
+  }
+}
+
+/* ===== Custom Scrollbar ===== */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--light-gray);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-dark);
+}
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="flex h-screen">
+        <!-- Mobile Sidebar Overlay -->
+        <div id="sidebar-overlay" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-20 lg:hidden hidden"></div>
+        
+        <!-- Sidebar -->
+        <div id="sidebar" class="sidebar fixed inset-y-0 left-0 z-30 w-64 bg-black text-white lg:static lg:inset-0 lg:translate-x-0">
+            <div class="flex items-center justify-between p-4 border-b border-gray-800">
+                <div class="flex items-center">
+                    <h1 class="text-xl font-bold">freeze<span class="text-yellow-400">FIX</span></h1>
+                </div>
+                <button id="close-sidebar-btn" class="lg:hidden">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="p-4 border-b border-gray-800">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-full bg-yellow-400 flex items-center justify-center">
+                        <i class="fas fa-camera text-black"></i>
+                    </div>
+                    <div>
+                        <h2 class="font-medium">FreezePix Studio</h2>
+                        <div class="flex items-center text-xs text-gray-400">
+                            <div class="flex items-center">
+                                <i class="fas fa-star text-yellow-400 mr-1 text-xs"></i>
+                                <span>4.8</span>
+                            </div>
+                            <span class="mx-1">•</span>
+                            <span>Verified</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-3">
+                    <div class="text-xs text-gray-400 flex justify-between">
+                        <span>Profile completion</span>
+                        <span>95%</span>
+                    </div>
+                    <div class="w-full bg-gray-700 rounded-full h-1.5 mt-1">
+                        <div 
+                            class="profile-completion-progress bg-yellow-400 h-1.5 rounded-full" 
+                            style="width: 95%">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <nav class="mt-6 px-4">
+                <div class="space-y-1">
+                    <a href="#" class="sidebar-link active flex items-center w-full px-4 py-2 rounded-lg transition" data-page="dashboard">
+                        <i class="fas fa-home mr-3"></i>
+                        Dashboard
+                    </a>
+                    
+                    <a href="#" class="sidebar-link flex items-center w-full px-4 py-2 rounded-lg transition" data-page="profile">
+                        <i class="fas fa-camera mr-3"></i>
+                        Studio Profile
+                    </a>
+                    
+                    <a href="#" class="sidebar-link flex items-center w-full px-4 py-2 rounded-lg transition" data-page="bookings">
+                        <i class="fas fa-calendar-alt mr-3"></i>
+                        Bookings
+                    </a>
+                    
+                    <a href="#" class="sidebar-link flex items-center w-full px-4 py-2 rounded-lg transition" data-page="services">
+                        <i class="fas fa-box mr-3"></i>
+                        Services
+                    </a>
+                    
+                    <a href="#" class="sidebar-link flex items-center w-full px-4 py-2 rounded-lg transition" data-page="customers">
+                        <i class="fas fa-users mr-3"></i>
+                        Customers
+                    </a>
+                    
+                    <a href="#" class="sidebar-link flex items-center w-full px-4 py-2 rounded-lg transition" data-page="ratings">
+                        <i class="fas fa-star mr-3"></i>
+                        Ratings
+                    </a>
+                    
+                    <a href="#" class="sidebar-link flex items-center w-full px-4 py-2 rounded-lg transition" data-page="availability">
+                        <i class="fas fa-clock mr-3"></i>
+                        Availability
+                    </a>
+                    
+                    <a href="#" class="sidebar-link flex items-center w-full px-4 py-2 rounded-lg transition" data-page="reports">
+                        <i class="fas fa-chart-bar mr-3"></i>
+                        Reports
+                    </a>
+                    
+                    <a href="#" class="sidebar-link flex items-center w-full px-4 py-2 rounded-lg transition" data-page="packages">
+                        <i class="fas fa-image mr-3"></i>
+                        Packages
+                    </a>
+                </div>
+                
+                <div class="absolute bottom-0 left-0 right-0 p-4">
+                    <a href="#" class="sidebar-link flex items-center w-full px-4 py-2 rounded-lg transition" data-page="settings">
+                        <i class="fas fa-cog mr-3"></i>
+                        Settings
+                    </a>
+                    
+                    <a href="#" class="flex items-center w-full px-4 py-2 mt-2 rounded-lg hover:bg-gray-800 transition">
+                        <i class="fas fa-sign-out-alt mr-3"></i>
+                        Logout
+                    </a>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Top Navigation -->
+            <header class="bg-white border-b border-gray-200 sticky top-0 z-10">
+                <div class="flex items-center justify-between p-4">
+                    <div class="flex items-center">
+                        <button id="open-sidebar-btn" class="lg:hidden mr-2">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                        
+                        <div class="hidden md:block">
+                            <h1 id="page-title" class="text-xl font-bold">Dashboard</h1>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-4">
+                        <!-- Search -->
+                        <div class="hidden md:flex items-center bg-gray-100 rounded-lg px-3 py-1.5">
+                            <i class="fas fa-search text-gray-500"></i>
+                            <input
+                                type="text"
+                                placeholder="Search..."
+                                class="bg-transparent border-none outline-none ml-2 w-32 lg:w-48"
+                            />
+                        </div>
+                        
+                        <!-- Notifications -->
+                        <div class="relative">
+                            <button
+                                id="notifications-btn"
+                                class="relative p-1.5 rounded-full hover:bg-gray-100 transition"
+                            >
+                                <i class="fas fa-bell"></i>
+                                <span class="notification-dot">3</span>
+                            </button>
+                            
+                            <div id="notifications-dropdown" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg overflow-hidden z-20">
+                                <div class="p-3 border-b border-gray-200 font-medium">
+                                    Notifications
+                                </div>
+                                <div class="max-h-96 overflow-y-auto">
+                                    <div class="p-3 border-b border-gray-100 hover:bg-gray-50 cursor-pointer bg-blue-50">
+                                        <div class="flex items-start">
+                                            <div class="p-2 rounded-full mr-3 bg-green-100 text-green-500">
+                                                <i class="fas fa-calendar-alt text-sm"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <p class="text-sm">New booking request from Maria Garcia</p>
+                                                <p class="text-xs text-gray-500 mt-1">2 hours ago</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="p-3 border-b border-gray-100 hover:bg-gray-50 cursor-pointer">
+                                        <div class="flex items-start">
+                                            <div class="p-2 rounded-full mr-3 bg-yellow-100 text-yellow-500">
+                                                <i class="fas fa-star text-sm"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <p class="text-sm">New 5-star review from Jamie Smith</p>
+                                                <p class="text-xs text-gray-500 mt-1">1 day ago</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="p-3 border-b border-gray-100 hover:bg-gray-50 cursor-pointer bg-blue-50">
+                                        <div class="flex items-start">
+                                            <div class="p-2 rounded-full mr-3 bg-blue-100 text-blue-500">
+                                                <i class="fas fa-bell text-sm"></i>
+                                            </div>
+                                            <div class="flex-1">
+                                                <p class="text-sm">Your subscription will renew in 7 days</p>
+                                                <p class="text-xs text-gray-500 mt-1">2 days ago</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-2 border-t border-gray-200 text-center">
+                                    <button class="text-sm text-yellow-500 hover:text-yellow-700">
+                                        Mark all as read
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- User Menu -->
+                        <div class="relative">
+                            <button id="user-menu-btn" class="flex items-center space-x-2">
+                                <div class="h-9 w-9 rounded-full bg-yellow-400 flex items-center justify-center text-black font-bold">
+                                    SO
+                                </div>
+                                <i class="fas fa-chevron-down hidden md:block text-sm"></i>
+                            </button>
+                            
+                            <div id="user-menu-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg overflow-hidden z-20">
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    <i class="fas fa-user mr-2"></i> Profile
+                                </a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    <i class="fas fa-cog mr-2"></i> Settings
+                                </a>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    <i class="fas fa-question-circle mr-2"></i> Help
+                                </a>
+                                <div class="border-t border-gray-100"></div>
+                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sub Navigation for Bookings -->
+                <div id="bookings-tabs" class="hidden flex px-4 border-t border-gray-200">
+                    <a href="#" class="tab-link active px-4 py-2 text-sm font-medium border-b-2 border-yellow-400 text-yellow-500" data-tab="upcoming">
+                        Upcoming
+                    </a>
+                    <a href="#" class="tab-link px-4 py-2 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="pending">
+                        Pending
+                    </a>
+                    <a href="#" class="tab-link px-4 py-2 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="completed">
+                        Completed
+                    </a>
+                    <a href="#" class="tab-link px-4 py-2 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="all">
+                        All Bookings
+                    </a>
+                </div>
+                
+                <!-- Sub Navigation for Services -->
+                <div id="services-tabs" class="hidden flex px-4 border-t border-gray-200">
+                    <a href="#" class="tab-link active px-4 py-2 text-sm font-medium border-b-2 border-yellow-400 text-yellow-500" data-tab="list">
+                        Services List
+                    </a>
+                    <a href="#" class="tab-link px-4 py-2 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="categories">
+                        Categories
+                    </a>
+                    <a href="#" class="tab-link px-4 py-2 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="pricing">
+                        Pricing
+                    </a>
+                </div>
+                
+                <!-- Sub Navigation for Reports -->
+                <div id="reports-tabs" class="hidden flex px-4 border-t border-gray-200">
+                    <a href="#" class="tab-link active px-4 py-2 text-sm font-medium border-b-2 border-yellow-400 text-yellow-500" data-tab="financial">
+                        Financial
+                    </a>
+                    <a href="#" class="tab-link px-4 py-2 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="booking-analytics">
+                        Booking Analytics
+                    </a>
+                    <a href="#" class="tab-link px-4 py-2 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="customer-insights">
+                        Customer Insights
+                    </a>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <main class="flex-1 overflow-y-auto p-4 bg-gray-50">
+                <!-- Dashboard Page -->
+                <div id="dashboard-page" class="page-content space-y-6">
+                    <!-- Stats Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="bg-white rounded-lg shadow p-4 border-l-4 border-yellow-400">
+                            <div class="flex items-center">
+                                <div class="p-3 rounded-full bg-yellow-100 text-yellow-500 mr-4">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500">Today's Bookings</p>
+                                    <p class="text-xl font-bold">5</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-lg shadow p-4 border-l-4 border-green-400">
+                            <div class="flex items-center">
+                                <div class="p-3 rounded-full bg-green-100 text-green-500 mr-4">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500">Total Customers</p>
+                                    <p class="text-xl font-bold">248</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-lg shadow p-4 border-l-4 border-blue-400">
+                            <div class="flex items-center">
+                                <div class="p-3 rounded-full bg-blue-100 text-blue-500 mr-4">
+                                    <i class="fas fa-box"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500">Active Services</p>
+                                    <p class="text-xl font-bold">12</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-lg shadow p-4 border-l-4 border-purple-400">
+                            <div class="flex items-center">
+                                <div class="p-3 rounded-full bg-purple-100 text-purple-500 mr-4">
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500">Avg. Rating</p>
+                                    <p class="text-xl font-bold">4.8/5</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Actions -->
+                    <div class="bg-white rounded-lg shadow p-4">
+                        <h2 class="text-lg font-semibold mb-4">Quick Actions</h2>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <button class="flex flex-col items-center justify-center bg-gray-50 hover:bg-gray-100 p-4 rounded-lg transition">
+                                <div class="w-10 h-10 rounded-full bg-yellow-100 text-yellow-500 flex items-center justify-center mb-2">
+                                    <i class="fas fa-plus"></i>
+                                </div>
+                                <span class="text-sm">New Booking</span>
+                            </button>
+                            
+                            <button class="flex flex-col items-center justify-center bg-gray-50 hover:bg-gray-100 p-4 rounded-lg transition">
+                                <div class="w-10 h-10 rounded-full bg-green-100 text-green-500 flex items-center justify-center mb-2">
+                                    <i class="fas fa-user-plus"></i>
+                                </div>
+                                <span class="text-sm">Add Customer</span>
+                            </button>
+                            
+                            <button class="flex flex-col items-center justify-center bg-gray-50 hover:bg-gray-100 p-4 rounded-lg transition">
+                                <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-500 flex items-center justify-center mb-2">
+                                    <i class="fas fa-box-open"></i>
+                                </div>
+                                <span class="text-sm">New Service</span>
+                            </button>
+                            
+                            <button class="flex flex-col items-center justify-center bg-gray-50 hover:bg-gray-100 p-4 rounded-lg transition">
+                                <div class="w-10 h-10 rounded-full bg-purple-100 text-purple-500 flex items-center justify-center mb-2">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <span class="text-sm">View Reports</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Revenue Chart -->
+                    <div class="bg-white rounded-lg shadow p-4">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-lg font-semibold">Revenue Overview</h2>
+                            <select class="border border-gray-300 rounded px-2 py-1 text-sm">
+                                <option>Last 30 days</option>
+                                <option>Last 90 days</option>
+                                <option>This year</option>
+                            </select>
+                        </div>
+                        <div class="h-64 flex items-center justify-center">
+                            <!-- Placeholder for chart -->
+                            <div class="w-full h-full bg-gray-50 flex items-center justify-center rounded-lg">
+                                <img src="https://cdn.pixabay.com/photo/2018/05/07/10/48/infographic-3380930_1280.jpg" class="w-full h-full object-contain rounded-lg" alt="Revenue Chart">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- Upcoming Bookings -->
+                        <div class="bg-white rounded-lg shadow">
+                            <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                                <h2 class="text-lg font-semibold">Upcoming Bookings</h2>
+                                <a href="#" class="text-sm text-yellow-500 hover:text-yellow-700 font-medium">View All</a>
+                            </div>
+                            <div class="p-4 space-y-3">
+                                <div class="booking-card bg-white border border-gray-200 rounded-lg p-3 transition duration-200">
+                                    <div class="flex justify-between">
+                                        <div>
+                                            <h3 class="font-medium">Portrait Session</h3>
+                                            <p class="text-sm text-gray-500">Alex Johnson</p>
+                                        </div>
+                                        <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800 h-fit">
+                                            Confirmed
+                                        </span>
+                                    </div>
+                                    <div class="flex items-center mt-2 text-sm text-gray-600">
+                                        <i class="fas fa-calendar-day mr-2 text-gray-400"></i>
+                                        <span>April 2, 2025</span>
+                                        <span class="mx-2">•</span>
+                                        <i class="fas fa-clock mr-2 text-gray-400"></i>
+                                        <span>2:00 PM</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="booking-card bg-white border border-gray-200 rounded-lg p-3 transition duration-200">
+                                    <div class="flex justify-between">
+                                        <div>
+                                            <h3 class="font-medium">Wedding Package</h3>
+                                            <p class="text-sm text-gray-500">Maria Garcia</p>
+                                        </div>
+                                        <span class="px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800 h-fit">
+                                            Pending
+                                        </span>
+                                    </div>
+                                    <div class="flex items-center mt-2 text-sm text-gray-600">
+                                        <i class="fas fa-calendar-day mr-2 text-gray-400"></i>
+                                        <span>April 5, 2025</span>
+                                        <span class="mx-2">•</span>
+                                        <i class="fas fa-clock mr-2 text-gray-400"></i>
+                                        <span>10:00 AM</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="booking-card bg-white border border-gray-200 rounded-lg p-3 transition duration-200">
+                                    <div class="flex justify-between">
+                                        <div>
+                                            <h3 class="font-medium">Product Photography</h3>
+                                            <p class="text-sm text-gray-500">Sam Lee</p>
+                                        </div>
+                                        <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800 h-fit">
+                                            Confirmed
+                                        </span>
+                                    </div>
+                                    <div class="flex items-center mt-2 text-sm text-gray-600">
+                                        <i class="fas fa-calendar-day mr-2 text-gray-400"></i>
+                                        <span>April 7, 2025</span>
+                                        <span class="mx-2">•</span>
+                                        <i class="fas fa-clock mr-2 text-gray-400"></i>
+                                        <span>3:30 PM</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Recent Ratings -->
+                        <div class="bg-white rounded-lg shadow">
+                            <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                                <h2 class="text-lg font-semibold">Recent Ratings & Reviews</h2>
+                                <a href="#" class="text-sm text-yellow-500 hover:text-yellow-700 font-medium">View All</a>
+                            </div>
+                            <div class="divide-y divide-gray-200">
+                                <div class="p-4">
+                                    <div class="flex justify-between">
+                                        <div class="font-medium">Jamie Smith</div>
+                                        <div class="flex">
+                                            <i class="fas fa-star text-yellow-400"></i>
+                                            <i class="fas fa-star text-yellow-400"></i>
+                                            <i class="fas fa-star text-yellow-400"></i>
+                                            <i class="fas fa-star text-yellow-400"></i>
+                                            <i class="fas fa-star text-yellow-400"></i>
+                                        </div>
+                                    </div>
+                                    <div class="text-sm text-gray-500 mt-1">Family Portrait</div>
+                                    <p class="mt-2 text-sm text-gray-600">"Excellent service, very professional! Our family photos turned out amazing."</p>
+                                    <div class="mt-2 bg-gray-50 p-2 rounded-lg border-l-2 border-yellow-400 text-sm italic">
+                                        <p>"Thank you so much for your kind words! It was a pleasure working with your family."</p>
+                                        <p class="text-xs text-gray-500 mt-1">- Studio Response</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="p-4">
+                                    <div class="flex justify-between">
+                                        <div class="font-medium">Taylor Wilson</div>
+                                        <div class="flex">
+                                            <i class="fas fa-star text-yellow-400"></i>
+                                            <i class="fas fa-star text-yellow-400"></i>
+                                            <i class="fas fa-star text-yellow-400"></i>
+                                            <i class="fas fa-star text-yellow-400"></i>
+                                            <i class="fas fa-star text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                    <div class="text-sm text-gray-500 mt-1">Portrait Session</div>
+                                    <p class="mt-2 text-sm text-gray-600">"Great photos, slightly delayed delivery but worth the wait."</p>
+                                    <div class="mt-2 flex justify-end">
+                                        <button class="text-xs text-yellow-500 hover:text-yellow-700">Reply to review</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Popular Services -->
+                    <div class="bg-white rounded-lg shadow mt-6">
+                        <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                            <h2 class="text-lg font-semibold">Popular Services</h2>
+                            <a href="#" class="text-sm text-yellow-500 hover:text-yellow-700 font-medium">Manage Services</a>
+                        </div>
+                        <div class="p-4">
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-left py-2 px-3 text-xs text-gray-500 uppercase">Service</th>
+                                            <th class="text-left py-2 px-3 text-xs text-gray-500 uppercase">Price</th>
+                                            <th class="text-left py-2 px-3 text-xs text-gray-500 uppercase">Bookings</th>
+                                            <th class="text-left py-2 px-3 text-xs text-gray-500 uppercase">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-100">
+                                        <tr>
+                                            <td class="py-3 px-3">
+                                                <div class="font-medium">Portrait Session</div>
+                                                <div class="text-xs text-gray-500">60 min</div>
+                                            </td>
+                                            <td class="py-3 px-3 font-medium">$150.00</td>
+                                            <td class="py-3 px-3">32</td>
+                                            <td class="py-3 px-3">
+                                                <span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">Active</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-3 px-3">
+                                                <div class="font-medium">Family Portrait</div>
+                                                <div class="text-xs text-gray-500">90 min</div>
+                                            </td>
+                                            <td class="py-3 px-3 font-medium">$200.00</td>
+                                            <td class="py-3 px-3">22</td>
+                                            <td class="py-3 px-3">
+                                                <span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">Active</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-3 px-3">
+                                                <div class="font-medium">Product Photography</div>
+                                                <div class="text-xs text-gray-500">30 min</div>
+                                            </td>
+                                            <td class="py-3 px-3 font-medium">$100.00</td>
+                                            <td class="py-3 px-3">15</td>
+                                            <td class="py-3 px-3">
+                                                <span class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800">Active</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bookings Page -->
+                <div id="bookings-page" class="page-content hidden">
+                    <div class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between">
+                        <div>
+                            <h1 class="text-2xl font-bold mb-1">Bookings Management</h1>
+                            <p class="text-gray-600">Manage all your studio bookings in one place</p>
+                        </div>
+                        <div class="mt-4 md:mt-0">
+                            <button class="bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2 rounded-lg flex items-center">
+                                <i class="fas fa-plus mr-2"></i> New Booking
+                            </button>
+                        </div>
+                    </div>
+</body>
+</html>
