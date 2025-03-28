@@ -1,0 +1,343 @@
+<html>
+<head>
+  <link rel="stylesheet" href="book.css">
+</head>
+<body>
+<!-- Studio Profile Page -->
+<div>
+  <a href="https://yosri5031.github.io/fp-db-schema" > Back To Home</a>
+</div>
+<div id="studio-profile-page" class="page-content hidden">
+    <div class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between">
+        <div>
+            <h1 class="text-2xl font-bold mb-1">Studio Profile</h1>
+            <p class="text-gray-600">Manage your studio details and appearance</p>
+        </div>
+        <div class="mt-4 md:mt-0">
+            <button class="bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2 rounded-lg flex items-center">
+                <i class="fas fa-save mr-2"></i> Save Changes
+            </button>
+        </div>
+    </div>
+    
+    <!-- Sub Navigation -->
+    <div class="bg-white rounded-lg shadow mb-6">
+        <div class="flex overflow-x-auto">
+            <a href="#" class="tab-link active whitespace-nowrap px-4 py-3 text-sm font-medium border-b-2 border-yellow-400 text-yellow-500" data-tab="basic-info">
+                Basic Information
+            </a>
+            <a href="#" class="tab-link whitespace-nowrap px-4 py-3 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="media">
+                Media & Gallery
+            </a>
+            <a href="#" class="tab-link whitespace-nowrap px-4 py-3 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="location">
+                Location
+            </a>
+            <a href="#" class="tab-link whitespace-nowrap px-4 py-3 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="social">
+                Social & Web
+            </a>
+            <a href="#" class="tab-link whitespace-nowrap px-4 py-3 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="business">
+                Business Details
+            </a>
+            <a href="#" class="tab-link whitespace-nowrap px-4 py-3 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-tab="settings">
+                Settings
+            </a>
+        </div>
+    </div>
+    
+    <!-- Basic Information Section -->
+    <div id="basic-info-section" class="tab-section">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Main Info Card -->
+            <div class="lg:col-span-2">
+                <div class="bg-white rounded-lg shadow">
+                    <div class="p-4 border-b border-gray-200">
+                        <h2 class="text-lg font-semibold">Studio Information</h2>
+                    </div>
+                    <div class="p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Studio Name</label>
+                                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent" value="FreezePix Studio">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent" value="+1 (555) 123-4567">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                                <input type="email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent" value="studio@freezepix.com">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Studio Category</label>
+                                <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent">
+                                    <option>Portrait Photography</option>
+                                    <option>Wedding Photography</option>
+                                    <option>Commercial Photography</option>
+                                    <option>Event Photography</option>
+                                    <option>Product Photography</option>
+                                </select>
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Studio Description</label>
+                                <textarea rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent">FreezePix Studio specializes in high-quality portrait and event photography with a modern, pixel-inspired aesthetic. Our professional photographers capture your special moments with precision and creativity.</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Address Card -->
+                <div class="bg-white rounded-lg shadow mt-6">
+                    <div class="p-4 border-b border-gray-200">
+                        <h2 class="text-lg font-semibold">Address Information</h2>
+                    </div>
+                    <div class="p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Street Address</label>
+                                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent" value="123 Photography Lane, Creative District">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">City</label>
+                                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent" value="San Francisco">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">State/Province</label>
+                                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent" value="California">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Postal Code</label>
+                                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent" value="94103">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Country</label>
+                                <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent">
+                                    <option>United States</option>
+                                    <option>Canada</option>
+                                    <option>United Kingdom</option>
+                                    <option>Australia</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Profile Stats & Owner Card -->
+            <div>
+                <!-- Profile Stats Card -->
+                <div class="bg-white rounded-lg shadow">
+                    <div class="p-4 border-b border-gray-200">
+                        <h2 class="text-lg font-semibold">Profile Status</h2>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-sm text-gray-600">Profile completion</span>
+                            <span class="text-sm font-medium">95%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5 mb-4">
+                            <div class="bg-yellow-400 h-2.5 rounded-full" style="width: 95%"></div>
+                        </div>
+                        
+                        <ul class="space-y-3">
+                            <li class="flex items-center text-sm">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                <span>Basic info completed</span>
+                            </li>
+                            <li class="flex items-center text-sm">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                <span>Address verified</span>
+                            </li>
+                            <li class="flex items-center text-sm">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                <span>Logo uploaded</span>
+                            </li>
+                            <li class="flex items-center text-sm">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                <span>Business details added</span>
+                            </li>
+                            <li class="flex items-center text-sm">
+                                <i class="fas fa-circle text-gray-300 mr-2"></i>
+                                <span class="text-gray-500">Add more studio images</span>
+                            </li>
+                        </ul>
+                        
+                        <div class="mt-6 space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-600">Profile Status</span>
+                                <div class="flex items-center">
+                                    <span class="h-2.5 w-2.5 rounded-full bg-green-500 mr-1.5"></span>
+                                    <span class="text-sm font-medium">Active</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-600">Verification</span>
+                                <div class="flex items-center">
+                                    <span class="h-2.5 w-2.5 rounded-full bg-green-500 mr-1.5"></span>
+                                    <span class="text-sm font-medium">Verified</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-600">Rating</span>
+                                <div class="flex items-center">
+                                    <div class="flex mr-1">
+                                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                        <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                        <i class="fas fa-star-half-alt text-yellow-400 text-xs"></i>
+                                    </div>
+                                    <span class="text-sm font-medium">4.8/5</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-600">Customers</span>
+                                <span class="text-sm font-medium">248</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Owner Card -->
+                <div class="bg-white rounded-lg shadow mt-6">
+                    <div class="p-4 border-b border-gray-200">
+                        <h2 class="text-lg font-semibold">Studio Owner</h2>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center mb-4">
+                            <div class="h-12 w-12 rounded-full bg-yellow-400 flex items-center justify-center text-black font-bold">
+                                SO
+                            </div>
+                            <div class="ml-3">
+                                <div class="font-medium">Studio Owner</div>
+                                <div class="text-sm text-gray-500">Primary Account</div>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-3">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent" value="John">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent" value="Doe">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                <input type="email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent" value="owner@freezepix.com">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                                <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent" value="+1 (555) 987-6543">
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <a href="#" class="text-sm text-yellow-500 hover:text-yellow-700">Change password</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Media & Gallery Section (Hidden by default) -->
+    <div id="media-section" class="tab-section hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Logo Upload -->
+            <div class="bg-white rounded-lg shadow">
+                <div class="p-4 border-b border-gray-200">
+                    <h2 class="text-lg font-semibold">Studio Logo</h2>
+                </div>
+                <div class="p-6 flex flex-col items-center justify-center">
+                    <div class="w-40 h-40 rounded-lg bg-gray-100 flex items-center justify-center mb-4 border-2 border-dashed border-gray-300">
+                        <img src="/api/placeholder/160/160" alt="Studio logo" class="w-full h-full object-cover rounded-lg">
+                    </div>
+                    <div class="flex space-x-2">
+                        <button class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded text-sm">Replace</button>
+                        <button class="px-3 py-1.5 bg-red-100 hover:bg-red-200 text-red-700 rounded text-sm">Remove</button>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-3 text-center">Recommended size: 400x400px. Max file size: 2MB.</p>
+                </div>
+            </div>
+            
+            <!-- Gallery -->
+            <div class="lg:col-span-2 bg-white rounded-lg shadow">
+                <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+                    <h2 class="text-lg font-semibold">Studio Gallery</h2>
+                    <button class="px-3 py-1.5 bg-yellow-400 hover:bg-yellow-500 text-black rounded text-sm">Add Images</button>
+                </div>
+                <div class="p-6">
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        <div class="relative group">
+                            <img src="/api/placeholder/300/200" alt="Studio image" class="w-full h-32 object-cover rounded-lg">
+                            <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition rounded-lg">
+                                <button class="p-1.5 bg-white rounded-full text-gray-700 mx-1">
+                                    <i class="fas fa-eye text-sm"></i>
+                                </button>
+                                <button class="p-1.5 bg-white rounded-full text-gray-700 mx-1">
+                                    <i class="fas fa-edit text-sm"></i>
+                                </button>
+                                <button class="p-1.5 bg-white rounded-full text-red-600 mx-1">
+                                    <i class="fas fa-trash text-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="relative group">
+                            <img src="/api/placeholder/300/200" alt="Studio image" class="w-full h-32 object-cover rounded-lg">
+                            <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition rounded-lg">
+                                <button class="p-1.5 bg-white rounded-full text-gray-700 mx-1">
+                                    <i class="fas fa-eye text-sm"></i>
+                                </button>
+                                <button class="p-1.5 bg-white rounded-full text-gray-700 mx-1">
+                                    <i class="fas fa-edit text-sm"></i>
+                                </button>
+                                <button class="p-1.5 bg-white rounded-full text-red-600 mx-1">
+                                    <i class="fas fa-trash text-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Add Image Placeholder -->
+                        <div class="border-2 border-dashed border-gray-300 rounded-lg h-32 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition">
+                            <i class="fas fa-plus text-gray-400 mb-1"></i>
+                            <span class="text-sm text-gray-500">Add Image</span>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-4">Recommended size: 1200x800px. Max file size: 5MB per image.</p>
+                    
+                    <div class="mt-6 border-t border-gray-200 pt-4">
+                        <h3 class="font-medium mb-3">Gallery Settings</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <label class="text-sm text-gray-700">Enable gallery on profile</label>
+                                <label class="flex items-center cursor-pointer">
+                                    <div class="relative">
+                                        <input type="checkbox" class="sr-only" checked>
+                                        <div class="w-10 h-5 bg-gray-200 rounded-full shadow-inner"></div>
+                                        <div class="dot absolute w-5 h-5 bg-yellow-400 rounded-full shadow -left-1 -top-0 transition transform translate-x-5"></div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <label class="text-sm text-gray-700">Show image captions</label>
+                                <label class="flex items-center cursor-pointer">
+                                    <div class="relative">
+                                        <input type="checkbox" class="sr-only">
+                                        <div class="w-10 h-5 bg-gray-200 rounded-full shadow-inner"></div>
+                                        <div class="dot absolute w-5 h-5 bg-gray-400 rounded-full shadow -left-1 -top-0 transition"></div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </body>
+            </html>
+            </div>
+        </div>
+    </div>
+</div>
