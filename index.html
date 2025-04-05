@@ -331,271 +331,458 @@
     RATING }o--o{ RATING_ATTRIBUTE : "includes"
         </div>
     </div>
-  <h1>Database Schema Detailed Tables</h1>
+  P</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the attribute was created.</td></tr>
+        </tbody>
+    </table>
+
+     <h1>Studio Booking System Database Tables</h1>
+    
+    <div class="table-container">
+        <h2>Studio Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Constraints</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the studio.</td></tr>
+                <tr><td>name</td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Name of the studio (e.g., "ABCC").</td></tr>
+                <tr><td>address</td><td>TEXT</td><td>NOT NULL</td><td>Address of the studio.</td></tr>
+                <tr><td>city</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>City where the studio is located.</td></tr>
+                <tr><td>country</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>Country where the studio is located.</td></tr>
+                <tr><td>owner_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the studio owner.</td></tr>
+                <tr><td>phone</td><td>VARCHAR(20)</td><td>NULLABLE</td><td>Contact phone number of the studio.</td></tr>
+                <tr><td>email</td><td>VARCHAR(255)</td><td>NULLABLE, UNIQUE</td><td>Contact email of the studio.</td></tr>
+                <tr><td>logo</td><td>TEXT</td><td>NULLABLE</td><td>URL of the studio's logo.</td></tr>
+                <tr><td>images</td><td>TEXT[]</td><td>NULLABLE</td><td>List of URLs for studio images (gallery).</td></tr>
+                <tr><td>website</td><td>VARCHAR(255)</td><td>NULLABLE</td><td>Website link of the studio.</td></tr>
+                <tr><td>social_links</td><td>JSON</td><td>NULLABLE</td><td>Social media links (e.g., {"instagram", "facebook"}).</td></tr>
+                <tr><td>description</td><td>TEXT</td><td>NULLABLE</td><td>Description of the studio's services and specialties.</td></tr>
+                <tr><td>business_registration</td><td>VARCHAR(100)</td><td>NULLABLE</td><td>Business registration number.</td></tr>
+                <tr><td>tax_id</td><td>VARCHAR(50)</td><td>NULLABLE</td><td>Tax identification number.</td></tr>
+                <tr><td>latitude</td><td>DECIMAL(10, 8)</td><td>NOT NULL</td><td>Latitude for geolocation.</td></tr>
+                <tr><td>longitude</td><td>DECIMAL(11, 8)</td><td>NOT NULL</td><td>Longitude for geolocation.</td></tr>
+                <tr><td>is_active</td><td>BOOLEAN</td><td>DEFAULT TRUE</td><td>Indicates if the studio is active and accepting bookings.</td></tr>
+                <tr><td>is_verified</td><td>BOOLEAN</td><td>DEFAULT FALSE</td><td>Indicates if the studio's details have been verified.</td></tr>
+                <tr><td>avg_rating</td><td>DECIMAL(3, 2)</td><td>DEFAULT NULL</td><td>Average rating of the studio based on customer reviews.</td></tr>
+                <tr><td>total_ratings</td><td>INT</td><td>DEFAULT 0</td><td>Total number of ratings received by the studio.</td></tr>
+                <tr><td>avg_cancel_rate</td><td>DECIMAL(5, 2)</td><td>DEFAULT 0</td><td>Average cancellation rate for the studio's bookings.</td></tr>
+                <tr><td>google_business_id</td><td>VARCHAR(255)</td><td>NULLABLE</td><td>Google My Business ID for integration.</td></tr>
+                <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the response was created.</td></tr>
+                <tr><td>updated_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the response was last updated.</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="table-container">
+        <h2>Invoice Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Constraints</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the invoice.</td></tr>
+                <tr><td>booking_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the booking this invoice is for.</td></tr>
+                <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the studio receiving payment.</td></tr>
+                <tr><td>studio_user_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the studio user managing the invoice.</td></tr>
+                <tr><td>total_amount</td><td>DECIMAL(10, 2)</td><td>NOT NULL</td><td>Total amount of the invoice.</td></tr>
+                <tr><td>commission_amount</td><td>DECIMAL(10, 2)</td><td>NOT NULL</td><td>Commission amount (25% flat rate).</td></tr>
+                <tr><td>status</td><td>ENUM('draft', 'sent', 'paid', 'overdue', 'cancelled')</td><td>NOT NULL</td><td>Status of the invoice.</td></tr>
+                <tr><td>due_date</td><td>DATE</td><td>NOT NULL</td><td>Due date for payment.</td></tr>
+                <tr><td>paid_date</td><td>DATE</td><td>NULLABLE</td><td>Date when the invoice was paid.</td></tr>
+                <tr><td>line_items</td><td>JSON</td><td>NOT NULL</td><td>Detailed line items in the invoice.</td></tr>
+                <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the invoice was created.</td></tr>
+                <tr><td>updated_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the invoice was last updated.</td></tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>d>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the studio was created.</td></tr>
+                <tr><td>updated_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the studio was last updated.</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="table-container">
+        <h2>Studio Users Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Constraints</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the studio user.</td></tr>
+                <tr><td>first_name</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>First name of the user.</td></tr>
+                <tr><td>last_name</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>Last name of the user.</td></tr>
+                <tr><td>email</td><td>VARCHAR(255)</td><td>NOT NULL, UNIQUE</td><td>Email address of the user.</td></tr>
+                <tr><td>password</td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Encrypted password of the user.</td></tr>
+                <tr><td>phone</td><td>VARCHAR(20)</td><td>NULLABLE</td><td>Contact phone number of the user.</td></tr>
+                <tr><td>profile_image</td><td>TEXT</td><td>NULLABLE</td><td>URL to the user's profile picture.</td></tr>
+                <tr><td>social_links</td><td>JSON</td><td>NULLABLE</td><td>Social links for the user.</td></tr>
+                <tr><td>role</td><td>ENUM('owner', 'admin', 'staff', 'photographer')</td><td>NOT NULL</td><td>Role of the user in the studio.</td></tr>
+                <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the studio the user belongs to.</td></tr>
+                <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the user account was created.</td></tr>
+                <tr><td>updated_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the user account was last updated.</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="table-container">
+        <h2>Base Service Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Constraints</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the base service.</td></tr>
+                <tr><td>name</td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Name of the base service (e.g., "Portrait Photography").</td></tr>
+                <tr><td>description</td><td>TEXT</td><td>NULLABLE</td><td>Description of the base service.</td></tr>
+                <tr><td>category</td><td>ENUM('photo', 'video', 'event', 'print')</td><td>NOT NULL</td><td>Category of the service.</td></tr>
+                <tr><td>standard_commission</td><td>DECIMAL(5, 2)</td><td>DEFAULT 25.00</td><td>Standard commission rate for this service type.</td></tr>
+                <tr><td>is_active</td><td>BOOLEAN</td><td>DEFAULT TRUE</td><td>Indicates if the base service is active.</td></tr>
+                <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the base service was created.</td></tr>
+                <tr><td>updated_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the base service was last updated.</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="table-container">
+        <h2>Service Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Constraints</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the service.</td></tr>
+                <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>The studio offering the service.</td></tr>
+                <tr><td>base_service_id</td><td>INT</td><td>FOREIGN KEY</td><td>Reference to the base service this extends.</td></tr>
+                <tr><td>name</td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Name of the service.</td></tr>
+                <tr><td>description</td><td>TEXT</td><td>NULLABLE</td><td>Description of the service.</td></tr>
+                <tr><td>pricing_type</td><td>ENUM('fixed', 'package')</td><td>NOT NULL</td><td>Indicates if the service has fixed or package pricing.</td></tr>
+                <tr><td>fixed_price</td><td>DECIMAL(10, 2)</td><td>NULLABLE</td><td>Flat price for the service if fixed pricing.</td></tr>
+                <tr><td>is_active</td><td>BOOLEAN</td><td>DEFAULT TRUE</td><td>Indicates if the service is active and available for booking.</td></tr>
+                <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the service was created.</td></tr>
+                <tr><td>updated_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the service was last updated.</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="table-container">
+        <h2>Item Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Constraints</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the item.</td></tr>
+                <tr><td>name</td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Name of the standard item (e.g., "8x10 Print").</td></tr>
+                <tr><td>description</td><td>TEXT</td><td>NULLABLE</td><td>Description of the item.</td></tr>
+                <tr><td>category</td><td>ENUM('print', 'album', 'frame', 'gift')</td><td>NOT NULL</td><td>Category of the item.</td></tr>
+                <tr><td>sizes</td><td>TEXT[]</td><td>NULLABLE</td><td>Available sizes for this item (if applicable).</td></tr>
+                <tr><td>standard_commission</td><td>DECIMAL(5, 2)</td><td>DEFAULT 25.00</td><td>Standard commission rate for this item.</td></tr>
+                <tr><td>is_active</td><td>BOOLEAN</td><td>DEFAULT TRUE</td><td>Indicates if the item is active.</td></tr>
+                <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the item was created.</td></tr>
+                <tr><td>updated_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the item was last updated.</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="table-container">
+        <h2>Studio Item Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Constraints</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the studio item.</td></tr>
+                <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>The studio offering the item.</td></tr>
+                <tr><td>item_id</td><td>INT</td><td>FOREIGN KEY</td><td>Reference to the standard item.</td></tr>
+                <tr><td>name</td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Custom name of the item (may differ from standard).</td></tr>
+                <tr><td>description</td><td>TEXT</td><td>NULLABLE</td><td>Custom description of the item.</td></tr>
+                <tr><td>price</td><td>DECIMAL(10, 2)</td><td>NOT NULL</td><td>Price set by the studio for this item.</td></tr>
+                <tr><td>is_active</td><td>BOOLEAN</td><td>DEFAULT TRUE</td><td>Indicates if the studio item is active.</td></tr>
+                <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the studio item was created.</td></tr>
+                <tr><td>updated_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the studio item was last updated.</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="table-container">
+        <h2>Package Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Constraints</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the package.</td></tr>
+                <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>The studio offering the package.</td></tr>
+                <tr><td>name</td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Name of the package.</td></tr>
+                <tr><td>description</td><td>TEXT</td><td>NOT NULL</td><td>Description of the package.</td></tr>
+                <tr><td>base_price</td><td>DECIMAL(10, 2)</td><td>NOT NULL</td><td>Base price for the package.</td></tr>
+                <tr><td>service_ids</td><td>JSON</td><td>NULLABLE</td><td>Array of service IDs included in the package.</td></tr>
+                <tr><td>studio_item_ids</td><td>JSON</td><td>NULLABLE</td><td>Array of studio item IDs included in the package.</td></tr>
+                <tr><td>valid_from</td><td>DATE</td><td>NOT NULL</td><td>Start date for the package availability.</td></tr>
+                <tr><td>valid_until</td><td>DATE</td><td>NOT NULL</td><td>End date for the package availability.</td></tr>
+                <tr><td>is_active</td><td>BOOLEAN</td><td>DEFAULT TRUE</td><td>Indicates if the package is active and available for booking.</td></tr>
+                <tr><td>package_type</td><td>ENUM('Green', 'Popular', 'Best Value')</td><td>DEFAULT 'Green'</td><td>Type or category of the package for promotional purposes.</td></tr>
+                <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the package was created.</td></tr>
+                <tr><td>updated_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the package was last updated.</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="table-container">
+        <h2>Availability Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Constraints</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the availability slot.</td></tr>
+                <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the studio the availability belongs to.</td></tr>
+                <tr><td>date</td><td>DATE</td><td>NOT NULL</td><td>Available date.</td></tr>
+                <tr><td>start_time</td><td>TIME</td><td>NOT NULL</td><td>Starting time of the availability slot.</td></tr>
+                <tr><td>end_time</td><td>TIME</td><td>NOT NULL</td><td>Ending time of the availability slot.</td></tr>
+                <tr><td>is_booked</td><td>BOOLEAN</td><td>DEFAULT FALSE</td><td>Indicates if the slot is booked.</td></tr>
+                <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the availability was created.</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="table-container">
+        <h2>Bookings Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Constraints</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for a booking.</td></tr>
+                <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the studio being booked.</td></tr>
+                <tr><td>service_id</td><td>INT</td><td>FOREIGN KEY, NULLABLE</td><td>ID of the service being booked.</td></tr>
+                <tr><td>package_id</td><td>INT</td><td>FOREIGN KEY, NULLABLE</td><td>ID of the package being booked (if applicable).</td></tr>
+                <tr><td>customer_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the customer making the booking.</td></tr>
+                <tr><td>date</td><td>DATE</td><td>NOT NULL</td><td>Date of the booking.</td></tr>
+                <tr><td>time</td><td>TIME</td><td>NOT NULL</td><td>Time of the booking.</td></tr>
+                <tr><td>status</td><td>ENUM('pending', 'confirmed', 'completed', 'cancelled')</td><td>NOT NULL</td><td>Status of the booking.</td></tr>
+                <tr><td>total_price</td><td>DECIMAL(10, 2)</td><td>NOT NULL</td><td>Total price for the booking.</td></tr>
+                <tr><td>commission_amount</td><td>DECIMAL(10, 2)</td><td>NOT NULL</td><td>Commission amount (25% flat rate).</td></tr>
+                <tr><td>is_rated</td><td>BOOLEAN</td><td>DEFAULT FALSE</td><td>Indicates if the customer has provided a rating.</td></tr>
+                <tr><td>is_cancelled</td><td>BOOLEAN</td><td>DEFAULT FALSE</td><td>Indicates if the booking was cancelled.</td></tr>
+                <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the booking was made.</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="table-container">
+        <h2>Booking Cancellation Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Constraints</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the cancellation.</td></tr>
+                <tr><td>booking_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the cancelled booking.</td></tr>
+                <tr><td>reason</td><td>TEXT</td><td>NOT NULL</td><td>Reason for cancellation.</td></tr>
+                <tr><td>cancel_type</td><td>ENUM('customer', 'studio', 'system')</td><td>NOT NULL</td><td>Who initiated the cancellation.</td></tr>
+                <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the cancellation was recorded.</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="table-container">
+        <h2>Customer Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Constraints</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the customer.</td></tr>
+                <tr><td>first_name</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>First name of the customer.</td></tr>
+                <tr><td>last_name</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>Last name of the customer.</td></tr>
+                <tr><td>email</td><td>VARCHAR(255)</td><td>NOT NULL, UNIQUE</td><td>Email address of the customer.</td></tr>
+                <tr><td>phone</td><td>VARCHAR(20)</td><td>NULLABLE</td><td>Contact phone number of the customer.</td></tr>
+                <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the customer account was created.</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="table-container">
+        <h2>Break Days Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Constraints</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the break day.</td></tr>
+                <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the studio setting the break day.</td></tr>
+                <tr><td>date</td><td>DATE</td><td>NOT NULL</td><td>Break day date.</td></tr>
+                <tr><td>reason</td><td>TEXT</td><td>NULLABLE</td><td>Reason for the break day.</td></tr>
+                <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the break day was set.</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="table-container">
+        <h2>Rating Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Constraints</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the rating.</td></tr>
+                <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the studio being rated.</td></tr>
+                <tr><td>booking_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the booking that generated this rating.</td></tr>
+                <tr><td>customer_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the customer providing the rating.</td></tr>
+                <tr><td>service_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the service that was rated.</td></tr>
+                <tr><td>stars</td><td>INT</td><td>NOT NULL</td><td>Overall star rating (typically 1-5).</td></tr>
+                <tr><td>review</td><td>TEXT</td><td>NULLABLE</td><td>Text review provided by the customer.</td></tr>
+                <tr><td>rating_attributes</td><td>JSON</td><td>NULLABLE</td><td>Structured ratings for specific aspects.</td></tr>
+                <tr><td>is_verified</td><td>BOOLEAN</td><td>DEFAULT FALSE</td><td>Flag indicating if the rating has been verified.</td></tr>
+                <tr><td>is_public</td><td>BOOLEAN</td><td>DEFAULT TRUE</td><td>Flag indicating if the rating should be publicly visible.</td></tr>
+                <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the rating was created.</td></tr>
+                <tr><td>updated_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the rating was last updated.</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="table-container">
+        <h2>Rating Attribute Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Constraints</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the rating attribute.</td></tr>
+                <tr><td>name</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>Name of the rating attribute.</td></tr>
+                <tr><td>description</td><td>TEXT</td><td>NULLABLE</td><td>Description of what this attribute measures.</td></tr>
+                <tr><td>is_active</td><td>BOOLEAN</td><td>DEFAULT TRUE</td><td>Flag indicating if this attribute is currently active.</td></tr>
+                <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the attribute was created.</td></tr>
+            </tbody>
+        </table>
+    </div>
 
 <div class="table-container">
-    <h2>Studio Table</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Field</th>
-                <th>Type</th>
-                <th>Constraints</th>
-                <th>Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the studio.</td></tr>
-            <tr><td>name</td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Name of the studio (e.g., "ABCC").</td></tr>
-            <tr><td>address</td><td>TEXT</td><td>NOT NULL</td><td>Address of the studio .</td></tr>
-            <tr><td>city</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>City where the studio is located (e.g., "New York").</td></tr>
-            <tr><td>country</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>Country where the studio is located (e.g., "USA").</td></tr>
-            <tr><td>owner_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the studio owner.</td></tr>
-            <tr><td>phone</td><td>VARCHAR(20)</td><td>NULLABLE</td><td>Contact phone number of the studio (e.g., "+1-XXX").</td></tr>
-            <tr><td>email</td><td>VARCHAR(255)</td><td>NULLABLE, UNIQUE</td><td>Contact email of the studio .</td></tr>
-            <tr><td>logo</td><td>TEXT</td><td>NULLABLE</td><td>URL of the studio's logo.</td></tr>
-            <tr><td>images</td><td>TEXT[]</td><td>NULLABLE</td><td>List of URLs for studio images (gallery).</td></tr>
-            <tr><td>website</td><td>VARCHAR(255)</td><td>NULLABLE</td><td>Website link of the studio .</td></tr>
-            <tr><td>social_links</td><td>JSON</td><td>NULLABLE</td><td>Social media links (e.g., {"instagram", "facebook"}).</td></tr>
-            <tr><td>description</td><td>TEXT</td><td>NULLABLE</td><td>Description of the studio's services and specialties.</td></tr>
-            <tr><td>business_registration</td><td>VARCHAR(100)</td><td>NULLABLE</td><td>Business registration number (e.g., "BR12345678").</td></tr>
-            <tr><td>tax_id</td><td>VARCHAR(50)</td><td>NULLABLE</td><td>Tax identification number (e.g., "TX987654321").</td></tr>
-            <tr><td>latitude</td><td>DECIMAL(10, 8)</td><td>NOT NULL</td><td>Latitude for geolocation (e.g., 40.7128).</td></tr>
-            <tr><td>longitude</td><td>DECIMAL(11, 8)</td><td>NOT NULL</td><td>Longitude for geolocation (e.g., -74.0060).</td></tr>
-            <tr><td>is_active</td><td>BOOLEAN</td><td>DEFAULT TRUE</td><td>Indicates if the studio is active and accepting bookings.</td></tr>
-            <tr><td>is_verified</td><td>BOOLEAN</td><td>DEFAULT FALSE</td><td>Indicates if the studio's details have been verified.</td></tr>
-            <tr class="highlight"><td>avg_rating</td><td>DECIMAL(3, 2)</td><td>DEFAULT NULL</td><td>Average rating of the studio based on customer reviews (e.g., 4.75).</td></tr>
-            <tr class="highlight"><td>total_ratings</td><td>INT</td><td>DEFAULT 0</td><td>Total number of ratings received by the studio.</td></tr>
-            <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the studio was created.</td></tr>
-            <tr><td>updated_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the studio was last updated.</td></tr>
-        </tbody>
-    </table>
+        <h2>Rating Response Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Constraints</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the rating response.</td></tr>
+                <tr><td>rating_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the rating being responded to.</td></tr>
+                <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the studio providing the response.</td></tr>
+                <tr><td>response</td><td>TEXT</td><td>NOT NULL</td><td>Text of the studio's response to the rating.</td></tr>
+                <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the response was created.</td></tr>
+                <tr><td>updated_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the response was last updated.</td></tr>
+            </tbody>
+        </table>
+    </div>
 
-    <h2>Studio Owner Table</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Field</th>
-                <th>Type</th>
-                <th>Constraints</th>
-                <th>Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the studio owner.</td></tr>
-            <tr><td>first_name</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>First name of the owner .</td></tr>
-            <tr><td>last_name</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>Last name of the owner .</td></tr>
-            <tr><td>email</td><td>VARCHAR(255)</td><td>NOT NULL, UNIQUE</td><td>Email address of the owner ).</td></tr>
-            <tr><td>password</td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Encrypted password of the owner.</td></tr>
-            <tr><td>phone</td><td>VARCHAR(20)</td><td>NULLABLE</td><td>Contact phone number of the owner.</td></tr>
-            <tr><td>profile_image</td><td>TEXT</td><td>NULLABLE</td><td>URL to the owner's profile picture.</td></tr>
-            <tr><td>social_links</td><td>JSON</td><td>NULLABLE</td><td>Social links for the owner.</td></tr>
-            <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the owner account was created.</td></tr>
-            <tr><td>updated_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the owner account was last updated.</td></tr>
-        </tbody>
-    </table>
-
-    <h2>Service Table</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Field</th>
-                <th>Type</th>
-                <th>Constraints</th>
-                <th>Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the service.</td></tr>
-            <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>The studio offering the service.</td></tr>
-            <tr><td>name</td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Name of the service (e.g., "Portrait Photography").</td></tr>
-            <tr><td>description</td><td>TEXT</td><td>NULLABLE</td><td>Description of the service (e.g., "Professional portrait sessions in studio or on location").</td></tr>
-            <tr><td>category</td><td>ENUM('photo', 'video', 'event')</td><td>NOT NULL</td><td>Category of the service (e.g., "photo").</td></tr>
-            <tr><td>pricing_type</td><td>ENUM('fixed', 'package')</td><td>NOT NULL</td><td>Indicates if the service has fixed or package pricing.</td></tr>
-            <tr><td>fixed_price</td><td>DECIMAL(10, 2)</td><td>NULLABLE</td><td>Flat price for the service if fixed pricing (e.g., $150.00).</td></tr>
-            <tr><td>is_active</td><td>BOOLEAN</td><td>DEFAULT TRUE</td><td>Indicates if the service is active and available for booking.</td></tr>
-            <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the service was created.</td></tr>
-            <tr><td>updated_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the service was last updated.</td></tr>
-        </tbody>
-    </table>
-
-    <h2>Package Table</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Field</th>
-                <th>Type</th>
-                <th>Constraints</th>
-                <th>Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the package.</td></tr>
-            <tr><td>service_id</td><td>INT</td><td>FOREIGN KEY</td><td>The service to which the package belongs.</td></tr>
-            <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>The studio offering the package.</td></tr>
-            <tr><td>name</td><td>VARCHAR(255)</td><td>NOT NULL</td><td>Name of the package (e.g., "Wedding Premium Package").</td></tr>
-            <tr><td>description</td><td>TEXT</td><td>NOT NULL</td><td>Description of the package (e.g., "Complete wedding day coverage with prints").</td></tr>
-            <tr><td>base_price</td><td>DECIMAL(10, 2)</td><td>NOT NULL</td><td>Base price for the package (e.g., $1500.00).</td></tr>
-            <tr><td>items</td><td>JSON</td><td>NULLABLE</td><td>Items included in the package (e.g., {"prints": {"8x10": 5, "5x7": 10}, "album": true}). Items are represented by icons in the interface.</td></tr>
-            <tr><td>services</td><td>JSON</td><td>NULLABLE</td><td>Services included in the package (e.g., {"engagement_session": true, "second_photographer": true}).</td></tr>
-            <tr><td>valid_from</td><td>DATE</td><td>NOT NULL</td><td>Start date for the package availability.</td></tr>
-            <tr><td>valid_until</td><td>DATE</td><td>NOT NULL</td><td>End date for the package availability.</td></tr>
-            <tr><td>is_active</td><td>BOOLEAN</td><td>DEFAULT TRUE</td><td>Indicates if the package is active and available for booking.</td></tr>
-            <tr><td>package_type</td><td>ENUM('Green', 'Popular', 'Best Value')</td><td>DEFAULT 'Green'</td><td>Type or category of the package for promotional purposes.</td></tr>
-            <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the package was created.</td></tr>
-            <tr><td>updated_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the package was last updated.</td></tr>
-        </tbody>
-    </table>
-
-    <h2>Availability Table</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Field</th>
-                <th>Type</th>
-                <th>Constraints</th>
-                <th>Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the availability slot.</td></tr>
-            <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the studio the availability belongs to.</td></tr>
-            <tr><td>date</td><td>DATE</td><td>NOT NULL</td><td>Available date (e.g., "2025-04-15").</td></tr>
-            <tr><td>start_time</td><td>TIME</td><td>NOT NULL</td><td>Starting time of the availability slot (e.g., "09:00:00").</td></tr>
-            <tr><td>end_time</td><td>TIME</td><td>NOT NULL</td><td>Ending time of the availability slot (e.g., "17:00:00").</td></tr>
-            <tr><td>is_booked</td><td>BOOLEAN</td><td>DEFAULT FALSE</td><td>Indicates if the slot is booked.</td></tr>
-            <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the availability was created.</td></tr>
-        </tbody>
-    </table>
-
-    <h2>Booking Table</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Field</th>
-                <th>Type</th>
-                <th>Constraints</th>
-                <th>Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for a booking.</td></tr>
-            <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the studio being booked.</td></tr>
-            <tr><td>service_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the service being booked.</td></tr>
-            <tr><td>customer_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the customer making the booking.</td></tr>
-            <tr><td>date</td><td>DATE</td><td>NOT NULL</td><td>Date of the booking (e.g., "2025-05-10").</td></tr>
-            <tr><td>time</td><td>TIME</td><td>NOT NULL</td><td>Time of the booking (e.g., "14:00:00").</td></tr>
-            <tr><td>status</td><td>ENUM('pending', 'confirmed', 'cancelled')</td><td>NOT NULL</td><td>Status of the booking.</td></tr>
-            <tr><td>total_price</td><td>DECIMAL(10, 2)</td><td>NOT NULL</td><td>Total price for the booking (e.g., $250.00).</td></tr>
-            <tr class="highlight"><td>is_rated</td><td>BOOLEAN</td><td>DEFAULT FALSE</td><td>Indicates if the customer has provided a rating for this booking.</td></tr>
-            <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the booking was made.</td></tr>
-        </tbody>
-    </table>
-
-    <h2>Customer Table</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Field</th>
-                <th>Type</th>
-                <th>Constraints</th>
-                <th>Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the customer.</td></tr>
-            <tr><td>first_name</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>First name of the custome.</td></tr>
-            <tr><td>last_name</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>Last name of the customer.</td></tr>
-            <tr><td>email</td><td>VARCHAR(255)</td><td>NOT NULL, UNIQUE</td><td>Email address of the customer.</td></tr>
-            <tr><td>phone</td><td>VARCHAR(20)</td><td>NULLABLE</td><td>Contact phone number of the customer.</td></tr>
-            <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the customer account was created.</td></tr>
-        </tbody>
-    </table>
-
-    <h2>Break Days Table</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Field</th>
-                <th>Type</th>
-                <th>Constraints</th>
-                <th>Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the break day.</td></tr>
-            <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the studio setting the break day.</td></tr>
-            <tr><td>date</td><td>DATE</td><td>NOT NULL</td><td>Break day date (e.g., "2025-12-25" for Christmas).</td></tr>
-            <tr><td>reason</td><td>TEXT</td><td>NULLABLE</td><td>Reason for the break day (e.g., "Holiday closure").</td></tr>
-            <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the break day was set.</td></tr>
-        </tbody>
-    </table>
-    
-    <!-- New tables for rating system -->
-    <h2 class="highlight">Rating Table</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Field</th>
-                <th>Type</th>
-                <th>Constraints</th>
-                <th>Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the rating.</td></tr>
-            <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the studio being rated.</td></tr>
-            <tr><td>booking_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the booking that generated this rating.</td></tr>
-            <tr><td>customer_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the customer providing the rating.</td></tr>
-            <tr><td>service_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the service that was rated.</td></tr>
-            <tr><td>stars</td><td>INT</td><td>NOT NULL</td><td>Overall star rating (typically 1-5).</td></tr>
-            <tr><td>review</td><td>TEXT</td><td>NULLABLE</td><td>Text review provided by the customer (e.g., "Great photography service, very professional").</td></tr>
-            <tr><td>rating_attributes</td><td>JSON</td><td>NULLABLE</td><td>Structured ratings for specific aspects (e.g., {"cleanliness": 5, "communication": 4, "value": 5}).</td></tr>
-            <tr><td>is_verified</td><td>BOOLEAN</td><td>DEFAULT FALSE</td><td>Flag indicating if the rating has been verified as legitimate.</td></tr>
-            <tr><td>is_public</td><td>BOOLEAN</td><td>DEFAULT TRUE</td><td>Flag indicating if the rating should be publicly visible.</td></tr>
-            <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the rating was created.</td></tr>
-            <tr><td>updated_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the rating was last updated.</td></tr>
-        </tbody>
-    </table>
-
-    <h2 class="highlight">Rating Attribute Table</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Field</th>
-                <th>Type</th>
-                <th>Constraints</th>
-                <th>Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the rating attribute.</td></tr>
-            <tr><td>name</td><td>VARCHAR(100)</td><td>NOT NULL</td><td>Name of the rating attribute (e.g., "Cleanliness", "Communication", "Value").</td></tr>
-            <tr><td>description</td><td>TEXT</td><td>NULLABLE</td><td>Description of what this attribute measures (e.g., "How well did the studio communicate before, during, and after the session?").</td></tr>
-            <tr><td>is_active</td><td>BOOLEAN</td><td>DEFAULT TRUE</td><td>Flag indicating if this attribute is currently active in ratings.</td></tr>
-            <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the attribute was created.</td></tr>
-        </tbody>
-    </table>
-
-    <h2 class="highlight">Rating Response Table</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Field</th>
-                <th>Type</th>
-                <th>Constraints</th>
-                <th>Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the rating response.</td></tr>
-            <tr><td>rating_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the rating being responded to.</td></tr>
-            <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the studio providing the response.</td></tr>
-            <tr><td>response</td><td>TEXT</td><td>NOT NULL</td><td>Text of the studio's response to the rating (e.g., "Thank you for your feedback! We're glad you enjoyed our service.").</td></tr>
-            <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the response was created.</td></tr>
-            <tr><td>updated_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the response was last updated.</td></tr>
-        </tbody>
-    </table>
+    <div class="table-container">
+        <h2>Invoice Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Constraints</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the invoice.</td></tr>
+                <tr><td>booking_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the booking this invoice is for.</td></tr>
+                <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the studio receiving payment.</td></tr>
+                <tr><td>studio_user_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the studio user managing the invoice.</td></tr>
+                <tr><td>total_amount</td><td>DECIMAL(10, 2)</td><td>NOT NULL</td><td>Total amount of the invoice.</td></tr>
+                <tr><td>commission_amount</td><td>DECIMAL(10, 2)</td><td>NOT NULL</td><td>Commission amount (25% flat rate).</td></tr>
+                <tr><td>status</td><td>ENUM('draft', 'sent', 'paid', 'overdue', 'cancelled')</td><td>NOT NULL</td><td>Status of the invoice.</td></tr>
+                <tr><td>due_date</td><td>DATE</td><td>NOT NULL</td><td>Due date for payment.</td></tr>
+                <tr><td>paid_date</td><td>DATE</td><td>NULLABLE</td><td>Date when the invoice was paid.</td></tr>
+                <tr><td>line_items</td><td>JSON</td><td>NOT NULL</td><td>Detailed line items in the invoice.</td></tr>
+                <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the invoice was created.</td></tr>
+                <tr><td>updated_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the invoice was last updated.</td></tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <div class="table-container">
