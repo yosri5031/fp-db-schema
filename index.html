@@ -756,33 +756,7 @@
         </table>
     </div>
 
-    <div class="table-container">
-        <h2>Invoice Table</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Field</th>
-                    <th>Type</th>
-                    <th>Constraints</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td>id</td><td>INT</td><td>PRIMARY KEY, AUTO_INCREMENT</td><td>Unique identifier for the invoice.</td></tr>
-                <tr><td>booking_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the booking this invoice is for.</td></tr>
-                <tr><td>studio_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the studio receiving payment.</td></tr>
-                <tr><td>studio_user_id</td><td>INT</td><td>FOREIGN KEY</td><td>ID of the studio user managing the invoice.</td></tr>
-                <tr><td>total_amount</td><td>DECIMAL(10, 2)</td><td>NOT NULL</td><td>Total amount of the invoice.</td></tr>
-                <tr><td>commission_amount</td><td>DECIMAL(10, 2)</td><td>NOT NULL</td><td>Commission amount (25% flat rate).</td></tr>
-                <tr><td>status</td><td>ENUM('draft', 'sent', 'paid', 'overdue', 'cancelled')</td><td>NOT NULL</td><td>Status of the invoice.</td></tr>
-                <tr><td>due_date</td><td>DATE</td><td>NOT NULL</td><td>Due date for payment.</td></tr>
-                <tr><td>paid_date</td><td>DATE</td><td>NULLABLE</td><td>Date when the invoice was paid.</td></tr>
-                <tr><td>line_items</td><td>JSON</td><td>NOT NULL</td><td>Detailed line items in the invoice.</td></tr>
-                <tr><td>created_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the invoice was created.</td></tr>
-                <tr><td>updated_at</td><td>TIMESTAMP</td><td>DEFAULT CURRENT_TIMESTAMP</td><td>Timestamp when the invoice was last updated.</td></tr>
-            </tbody>
-        </table>
-    </div>
+    
 </div>
 
 <div class="table-container">
