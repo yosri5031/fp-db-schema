@@ -91,164 +91,245 @@
     </div>
     
     <div class="mermaid-container">
-        IN MAINTENANCE
-        <!-- <div class="mermaid">
-            erDiagram
-                STUDIO {
-                    INT id PK
-                    VARCHAR name
-                    TEXT address
-                    VARCHAR city
-                    VARCHAR country
-                    INT owner_id FK
-                    VARCHAR phone
-                    VARCHAR email
-                    TEXT logo
-                    TEXT[] images
-                    VARCHAR website
-                    JSON social_links
-                    TEXT description
-                    VARCHAR business_registration
-                    VARCHAR tax_id
-                    DECIMAL latitude
-                    DECIMAL longitude
-                    BOOLEAN is_active
-                    BOOLEAN is_verified
-                    DECIMAL avg_rating
-                    INT total_ratings
-                    TIMESTAMP created_at
-                    TIMESTAMP updated_at
-                }
+        <div class="mermaid">
+           erDiagram
+    STUDIO {
+        INT id PK
+        VARCHAR name
+        TEXT address
+        VARCHAR city
+        VARCHAR country
+        INT owner_id FK
+        VARCHAR phone
+        VARCHAR email
+        TEXT logo
+        TEXT[] images
+        VARCHAR website
+        JSON social_links
+        TEXT description
+        VARCHAR business_registration
+        VARCHAR tax_id
+        DECIMAL latitude
+        DECIMAL longitude
+        BOOLEAN is_active
+        BOOLEAN is_verified
+        DECIMAL avg_rating
+        INT total_ratings
+        DECIMAL avg_cancel_rate
+        VARCHAR google_business_id
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+    }
+    
+    STUDIO_USERS {
+        INT id PK
+        VARCHAR first_name
+        VARCHAR last_name
+        VARCHAR email
+        VARCHAR password
+        VARCHAR phone
+        TEXT profile_image
+        JSON social_links
+        ENUM role
+        INT studio_id FK
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+    }
+    
+    BASE_SERVICE {
+        INT id PK
+        VARCHAR name
+        TEXT description
+        ENUM category
+        DECIMAL standard_commission
+        BOOLEAN is_active
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+    }
+    
+    SERVICE {
+        INT id PK
+        INT studio_id FK
+        INT base_service_id FK
+        VARCHAR name
+        TEXT description
+        ENUM pricing_type
+        DECIMAL fixed_price
+        BOOLEAN is_active
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+    }
+    
+    ITEM {
+        INT id PK
+        VARCHAR name
+        TEXT description
+        ENUM category
+        TEXT[] sizes
+        DECIMAL standard_commission
+        BOOLEAN is_active
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+    }
+    
+    STUDIO_ITEM {
+        INT id PK
+        INT studio_id FK
+        INT item_id FK
+        VARCHAR name
+        TEXT description
+        DECIMAL price
+        BOOLEAN is_active
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+    }
+    
+    PACKAGE {
+        INT id PK
+        INT studio_id FK
+        VARCHAR name
+        TEXT description
+        DECIMAL base_price
+        JSON service_ids
+        JSON studio_item_ids
+        DATE valid_from
+        DATE valid_until
+        BOOLEAN is_active
+        ENUM package_type
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+    }
+    
+    AVAILABILITY {
+        INT id PK
+        INT studio_id FK
+        DATE date
+        TIME start_time
+        TIME end_time
+        BOOLEAN is_booked
+        TIMESTAMP created_at
+    }
+    
+    BOOKINGS {
+        INT id PK
+        INT studio_id FK
+        INT service_id FK
+        INT package_id FK
+        INT customer_id FK
+        DATE date
+        TIME time
+        ENUM status
+        DECIMAL total_price
+        DECIMAL commission_amount
+        BOOLEAN is_rated
+        BOOLEAN is_cancelled
+        TIMESTAMP created_at
+    }
+    
+    BOOKING_CANCELLATION {
+        INT id PK
+        INT booking_id FK
+        TEXT reason
+        ENUM cancel_type
+        TIMESTAMP created_at
+    }
+    
+    CUSTOMER {
+        INT id PK
+        VARCHAR first_name
+        VARCHAR last_name
+        VARCHAR email
+        VARCHAR phone
+        TIMESTAMP created_at
+    }
+    
+    BREAK_DAYS {
+        INT id PK
+        INT studio_id FK
+        DATE date
+        TEXT reason
+        TIMESTAMP created_at
+    }
+    
+    RATING {
+        INT id PK
+        INT studio_id FK
+        INT booking_id FK
+        INT customer_id FK
+        INT service_id FK
+        INT stars
+        TEXT review
+        JSON rating_attributes
+        BOOLEAN is_verified
+        BOOLEAN is_public
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+    }
+    
+    RATING_ATTRIBUTE {
+        INT id PK
+        VARCHAR name
+        TEXT description
+        BOOLEAN is_active
+        TIMESTAMP created_at
+    }
+    
+    RATING_RESPONSE {
+        INT id PK
+        INT rating_id FK
+        INT studio_id FK
+        TEXT response
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+    }
+    
+    INVOICE {
+        INT id PK
+        INT booking_id FK
+        INT studio_id FK
+        INT studio_user_id FK
+        DECIMAL total_amount
+        DECIMAL commission_amount
+        ENUM status
+        DATE due_date
+        DATE paid_date
+        JSON line_items
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+    }
 
-                STUDIO_OWNER {
-                    INT id PK
-                    VARCHAR first_name
-                    VARCHAR last_name
-                    VARCHAR email
-                    VARCHAR password
-                    VARCHAR phone
-                    TEXT profile_image
-                    JSON social_links
-                    TIMESTAMP created_at
-                    TIMESTAMP updated_at
-                }
-
-                SERVICE {
-                    INT id PK
-                    INT studio_id FK
-                    VARCHAR name
-                    TEXT description
-                    ENUM category
-                    ENUM pricing_type
-                    DECIMAL fixed_price
-                    BOOLEAN is_active
-                    TIMESTAMP created_at
-                    TIMESTAMP updated_at
-                }
-
-                PACKAGE {
-                    INT id PK
-                    INT service_id FK
-                    INT studio_id FK
-                    VARCHAR name
-                    TEXT description
-                    DECIMAL base_price
-                    JSON items
-                    JSON services
-                    DATE valid_from
-                    DATE valid_until
-                    BOOLEAN is_active
-                    ENUM package_type
-                    TIMESTAMP created_at
-                    TIMESTAMP updated_at
-                }
-
-                AVAILABILITY {
-                    INT id PK
-                    INT studio_id FK
-                    DATE date
-                    TIME start_time
-                    TIME end_time
-                    BOOLEAN is_booked
-                    TIMESTAMP created_at
-                }
-
-                BOOKINGS {
-                    INT id PK
-                    INT studio_id FK
-                    INT service_id FK
-                    INT customer_id FK
-                    DATE date
-                    TIME time
-                    ENUM status
-                    DECIMAL total_price
-                    BOOLEAN is_rated
-                    TIMESTAMP created_at
-                }
-
-                CUSTOMER {
-                    INT id PK
-                    VARCHAR first_name
-                    VARCHAR last_name
-                    VARCHAR email
-                    VARCHAR phone
-                    TIMESTAMP created_at
-                }
-
-                BREAK_DAYS {
-                    INT id PK
-                    INT studio_id FK
-                    DATE date
-                    TEXT reason
-                    TIMESTAMP created_at
-                }
-
-                RATING {
-                    INT id PK
-                    INT studio_id FK
-                    INT booking_id FK
-                    INT customer_id FK
-                    INT service_id FK
-                    INT stars
-                    TEXT review
-                    JSON rating_attributes
-                    BOOLEAN is_verified
-                    BOOLEAN is_public
-                    TIMESTAMP created_at
-                    TIMESTAMP updated_at
-                }
-
-                RATING_ATTRIBUTE {
-                    INT id PK
-                    VARCHAR name
-                    TEXT description
-                    BOOLEAN is_active
-                    TIMESTAMP created_at
-                }
-
-                RATING_RESPONSE {
-                    INT id PK
-                    INT rating_id FK
-                    INT studio_id FK
-                    TEXT response
-                    TIMESTAMP created_at
-                    TIMESTAMP updated_at
-                }
-
-                STUDIO ||--o{ SERVICE : "offers"
-                STUDIO ||--o{ AVAILABILITY : "has"
-                STUDIO ||--o{ BOOKINGS : "receives"
-                STUDIO ||--o{ BREAK_DAYS : "sets"
-                STUDIO ||--o| STUDIO_OWNER : "owned_by"
-                STUDIO ||--o{ RATING : "receives"
-                CUSTOMER ||--o{ BOOKINGS : "makes"
-                CUSTOMER ||--o{ RATING : "gives"
-                SERVICE ||--o{ BOOKINGS : "booked_for"
-                SERVICE ||--o{ PACKAGE : "has"
-                BOOKINGS ||--o{ RATING : "generates"
-                RATING ||--o{ RATING_RESPONSE : "may_have"
-                RATING }o--o{ RATING_ATTRIBUTE : "includes"
-        </div>-->
+    STUDIO ||--o{ SERVICE : "offers"
+    STUDIO ||--o{ AVAILABILITY : "has"
+    STUDIO ||--o{ BOOKINGS : "receives"
+    STUDIO ||--o{ BREAK_DAYS : "sets"
+    STUDIO ||--o{ STUDIO_USERS : "has"
+    STUDIO ||--o{ RATING : "receives"
+    STUDIO ||--o{ STUDIO_ITEM : "sells"
+    STUDIO ||--o{ INVOICE : "receives"
+    STUDIO ||--o{ PACKAGE : "offers"
+    
+    STUDIO_USERS ||--o{ INVOICE : "manages"
+    
+    CUSTOMER ||--o{ BOOKINGS : "makes"
+    CUSTOMER ||--o{ RATING : "gives"
+    
+    BASE_SERVICE ||--o{ SERVICE : "extends"
+    
+    SERVICE ||--o{ BOOKINGS : "booked_for"
+    
+    ITEM ||--o{ STUDIO_ITEM : "provided_as"
+    
+    STUDIO_ITEM }o--o{ PACKAGE : "included_in"
+    SERVICE }o--o{ PACKAGE : "included_in"
+    
+    BOOKINGS ||--o{ RATING : "generates"
+    BOOKINGS ||--o{ INVOICE : "generates"
+    BOOKINGS ||--o| BOOKING_CANCELLATION : "may_have"
+    BOOKINGS }o--o{ PACKAGE : "may_book"
+    
+    RATING ||--o{ RATING_RESPONSE : "may_have"
+    RATING }o--o{ RATING_ATTRIBUTE : "includes"
+        </div>
     </div>
   <h1>Database Schema Detailed Tables</h1>
 
