@@ -376,6 +376,73 @@ erDiagram
         TIMESTAMP created_at
         TIMESTAMP updated_at
     }
+    
+    ORDERS {
+        INT id PK
+        INT customer_id FK
+        INT studio_id FK
+        VARCHAR order_number
+        DECIMAL subtotal
+        DECIMAL tax_amount
+        DECIMAL discount_amount
+        DECIMAL shipping_fee
+        DECIMAL total_amount
+        ENUM payment_method
+        ENUM payment_status
+        ENUM order_status
+        VARCHAR discount_code
+        TEXT order_notes
+        JSON shipping_address
+        JSON billing_address
+        JSON order_items
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+    }
+    
+    ORDER_ITEMS {
+        INT id PK
+        INT order_id FK
+        INT item_id FK
+        INT studio_item_id FK
+        VARCHAR item_name
+        VARCHAR size
+        VARCHAR product_type
+        INT quantity
+        DECIMAL unit_price
+        DECIMAL total_price
+        TEXT custom_options
+        TEXT item_notes
+        VARCHAR thumbnail_url
+        TIMESTAMP created_at
+    }
+    
+    PAYMENT {
+        INT id PK
+        INT order_id FK
+        VARCHAR transaction_id
+        VARCHAR payment_provider
+        ENUM payment_method
+        DECIMAL amount
+        ENUM status
+        JSON payment_details
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+    }
+    
+    DISCOUNT_CODES {
+        INT id PK
+        VARCHAR code
+        VARCHAR description
+        ENUM value_type
+        DECIMAL value
+        DATE valid_from
+        DATE valid_until
+        INT usage_limit
+        INT times_used
+        BOOLEAN is_active
+        TIMESTAMP created_at
+        TIMESTAMP updated_at
+    }
 
     STUDIO ||--o{ SERVICE : "offers"
     STUDIO ||--o{ AVAILABILITY : "has"
@@ -386,19 +453,24 @@ erDiagram
     STUDIO ||--o{ STUDIO_ITEM : "sells"
     STUDIO ||--o{ INVOICE : "receives"
     STUDIO ||--o{ PACKAGE : "offers"
+    STUDIO ||--o{ ORDERS : "fulfills"
     
     STUDIO_USERS ||--o{ INVOICE : "manages"
     
     CUSTOMER ||--o{ BOOKINGS : "makes"
     CUSTOMER ||--o{ RATING : "gives"
+    CUSTOMER ||--o{ ORDERS : "places"
     
     BASE_SERVICE ||--o{ SERVICE : "extends"
     
     SERVICE ||--o{ BOOKINGS : "booked_for"
     
     ITEM ||--o{ STUDIO_ITEM : "provided_as"
+    ITEM ||--o{ ORDER_ITEMS : "referenced_in"
     
     STUDIO_ITEM }o--o{ PACKAGE : "included_in"
+    STUDIO_ITEM ||--o{ ORDER_ITEMS : "ordered_as"
+    
     SERVICE }o--o{ PACKAGE : "included_in"
     
     BOOKINGS ||--o{ RATING : "generates"
@@ -408,6 +480,10 @@ erDiagram
     
     RATING ||--o{ RATING_RESPONSE : "may_have"
     RATING }o--o{ RATING_ATTRIBUTE : "includes"
+    
+    ORDERS ||--o{ ORDER_ITEMS : "contains"
+    ORDERS ||--o{ PAYMENT : "processed_through"
+    ORDERS }o--o{ DISCOUNT_CODES : "may_use"
                 </div>
             </div>
         </div>
